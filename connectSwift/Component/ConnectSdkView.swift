@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ConnectSDK: View {
+struct ConnectSdkView: View {
 
     var body: some View {
         VStack {
@@ -25,5 +25,5 @@ struct ConnectSDK: View {
 }
 
 #Preview {
-    ConnectSDK()
+    ConnectSdkView()
 }
