@@ -16,7 +16,7 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 20)
-                NavigationLink(destination: ConnectSDK()) {
+                NavigationLink(destination: ConnectSdkView()) {
                     Text("ConnectSDK")
                         .font(.title2)
                         .padding()
