@@ -17,23 +17,23 @@ struct ContentView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 20)
                 HStack {
-                                   NavigationLink(destination: ConnectSdkView()) {
-                                       Text("ConnectSDK")
-                                           .font(.title2)
-                                           .padding()
-                                           .background(Color.blue)
-                                           .foregroundColor(.white)
-                                           .cornerRadius(10)
-                                   }
-                                   NavigationLink(destination: BluetoothView()) {
-                                       Text("Bluetooth")
-                                           .font(.title2)
-                                           .padding()
-                                           .background(Color.blue)
-                                           .foregroundColor(.white)
-                                           .cornerRadius(10)
-                                   }
-                               }
+                       NavigationLink(destination: ConnectSdkView()) {
+                           Text("ConnectSDK")
+                               .font(.title2)
+                               .padding()
+                               .background(Color.blue)
+                               .foregroundColor(.white)
+                               .cornerRadius(10)
+                       }
+                       NavigationLink(destination: BluetoothView()) {
+                           Text("Bluetooth")
+                               .font(.title2)
+                               .padding()
+                               .background(Color.blue)
+                               .foregroundColor(.white)
+                               .cornerRadius(10)
+                       }
+                   }
                 Spacer()
             }
             .padding()
