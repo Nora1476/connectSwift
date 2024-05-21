@@ -102,7 +102,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
-                print("특성 발견: \(characteristic.uuid)")
+//                print("특성 발견: \(characteristic.uuid)")
                 
                 // 읽기 가능한 특성의 값을 읽음
                 if characteristic.properties.contains(.read) {
@@ -143,7 +143,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         
         if let dataToWrite = data.data(using: .utf8) {
             peripheral?.writeValue(dataToWrite, for: characteristic, type: .withResponse)
-            print("데이터 쓰기 요청: \(dataToWrite) to \(characteristic.uuid)")
+//            print("데이터 쓰기 요청: \(dataToWrite) to \(characteristic.uuid)")
         } else {
             print("데이터 변환 오류")
         }
