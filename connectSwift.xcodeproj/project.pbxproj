@@ -12,6 +12,7 @@
 		882B35DD2BFADCAF00CD36FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B35DC2BFADCAF00CD36FD /* Assets.xcassets */; };
 		882B35E12BFADCAF00CD36FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B35E02BFADCAF00CD36FD /* Preview Assets.xcassets */; };
 		882B36052BFAE0FC00CD36FD /* ConnectSdkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B36042BFAE0FC00CD36FD /* ConnectSdkView.swift */; };
+		8853D5062BFC2B18000BC8CA /* BluetoothView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8853D5052BFC2B18000BC8CA /* BluetoothView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		882B35E62BFADCB000CD36FD /* connectSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = connectSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B35F02BFADCB000CD36FD /* connectSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = connectSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B36042BFAE0FC00CD36FD /* ConnectSdkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectSdkView.swift; sourceTree = "<group>"; };
+		8853D5052BFC2B18000BC8CA /* BluetoothView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				882B36042BFAE0FC00CD36FD /* ConnectSdkView.swift */,
+				8853D5052BFC2B18000BC8CA /* BluetoothView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8853D5062BFC2B18000BC8CA /* BluetoothView.swift in Sources */,
 				882B36052BFAE0FC00CD36FD /* ConnectSdkView.swift in Sources */,
 				882B35DB2BFADCAD00CD36FD /* ContentView.swift in Sources */,
 				882B35D92BFADCAD00CD36FD /* connectSwiftApp.swift in Sources */,
