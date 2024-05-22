@@ -12,8 +12,10 @@
 		882B35DD2BFADCAF00CD36FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B35DC2BFADCAF00CD36FD /* Assets.xcassets */; };
 		882B35E12BFADCAF00CD36FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B35E02BFADCAF00CD36FD /* Preview Assets.xcassets */; };
 		882B36052BFAE0FC00CD36FD /* ConnectSdkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B36042BFAE0FC00CD36FD /* ConnectSdkView.swift */; };
-		8853D5062BFC2B18000BC8CA /* BluetoothView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8853D5052BFC2B18000BC8CA /* BluetoothView.swift */; };
+		8853D5062BFC2B18000BC8CA /* BluetoothBle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8853D5052BFC2B18000BC8CA /* BluetoothBle.swift */; };
 		8853D50C2BFC3EB8000BC8CA /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8853D50B2BFC3EB8000BC8CA /* BluetoothManager.swift */; };
+		88CFCE192BFD94A700FAA10E /* BluetoothHid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFCE182BFD94A700FAA10E /* BluetoothHid.swift */; };
+		88CFCE1C2BFDBC8D00FAA10E /* BluetoothHIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CFCE1B2BFDBC8D00FAA10E /* BluetoothHIDManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +45,11 @@
 		882B35E62BFADCB000CD36FD /* connectSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = connectSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B35F02BFADCB000CD36FD /* connectSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = connectSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B36042BFAE0FC00CD36FD /* ConnectSdkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectSdkView.swift; sourceTree = "<group>"; };
-		8853D5052BFC2B18000BC8CA /* BluetoothView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothView.swift; sourceTree = "<group>"; };
+		8853D5052BFC2B18000BC8CA /* BluetoothBle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothBle.swift; sourceTree = "<group>"; };
 		8853D50B2BFC3EB8000BC8CA /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		88CFCE182BFD94A700FAA10E /* BluetoothHid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothHid.swift; sourceTree = "<group>"; };
+		88CFCE1A2BFDB27600FAA10E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		88CFCE1B2BFDBC8D00FAA10E /* BluetoothHIDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothHIDManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +98,7 @@
 		882B35D72BFADCAD00CD36FD /* connectSwift */ = {
 			isa = PBXGroup;
 			children = (
+				88CFCE1A2BFDB27600FAA10E /* Info.plist */,
 				8853D50A2BFC3BFF000BC8CA /* Bluetooth */,
 				882B36032BFAE0DE00CD36FD /* Component */,
 				882B35D82BFADCAD00CD36FD /* connectSwiftApp.swift */,
@@ -116,7 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				882B36042BFAE0FC00CD36FD /* ConnectSdkView.swift */,
-				8853D5052BFC2B18000BC8CA /* BluetoothView.swift */,
+				8853D5052BFC2B18000BC8CA /* BluetoothBle.swift */,
+				88CFCE182BFD94A700FAA10E /* BluetoothHid.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -125,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				8853D50B2BFC3EB8000BC8CA /* BluetoothManager.swift */,
+				88CFCE1B2BFDBC8D00FAA10E /* BluetoothHIDManager.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -260,9 +268,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8853D50C2BFC3EB8000BC8CA /* BluetoothManager.swift in Sources */,
-				8853D5062BFC2B18000BC8CA /* BluetoothView.swift in Sources */,
+				88CFCE1C2BFDBC8D00FAA10E /* BluetoothHIDManager.swift in Sources */,
+				8853D5062BFC2B18000BC8CA /* BluetoothBle.swift in Sources */,
 				882B36052BFAE0FC00CD36FD /* ConnectSdkView.swift in Sources */,
 				882B35DB2BFADCAD00CD36FD /* ContentView.swift in Sources */,
+				88CFCE192BFD94A700FAA10E /* BluetoothHid.swift in Sources */,
 				882B35D92BFADCAD00CD36FD /* connectSwiftApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,9 +435,12 @@
 				DEVELOPMENT_TEAM = T467LT4G8H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = connectSwift/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -438,10 +451,9 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = amuz.connectSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -465,9 +477,12 @@
 				DEVELOPMENT_TEAM = T467LT4G8H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = connectSwift/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -478,10 +493,9 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = amuz.connectSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";

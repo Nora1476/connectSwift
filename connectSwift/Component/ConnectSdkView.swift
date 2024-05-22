@@ -12,15 +12,15 @@ struct ConnectSdkView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("connectSDK")
-                    .font(.largeTitle)
+                Text("connectSDK Test")
+                    .font(.title2)
                     .padding()
                 Spacer()
             }
             Spacer()
 
         }
-        .navigationTitle("Second View")
+        .navigationTitle("ConnectSDK View")
     }
 }
 

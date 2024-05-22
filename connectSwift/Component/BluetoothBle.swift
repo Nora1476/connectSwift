@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreBluetooth
 
-struct BluetoothView: View {
+struct BluetoothBle: View {
     @ObservedObject var bluetoothManager = BluetoothManager() //클래스의 인스턴스를 관찰
 
     var body: some View {
@@ -40,7 +40,7 @@ struct BluetoothView: View {
                 Spacer()
             } else {
                 //id = 반복하여 뷰를 생성하는데, 각 항목을 고유하게 식별할 수 있는 키
-                List(bluetoothManager.peripherals, id: \.identifier) { peripheral in
+                List(bluetoothManager.peripherals, id: \.identifier) { peripheral in //리스트 내 peripheral기기 돌며 반복문 실행
                     HStack {
                         Text(peripheral.name ?? "Unknown")
                         Spacer()
@@ -65,5 +65,5 @@ struct BluetoothView: View {
 }
 
 #Preview {
-    BluetoothView()
+    BluetoothBle()
 }

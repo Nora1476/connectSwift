@@ -12,6 +12,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     var centralManager: CBCentralManager?    //BLE 중앙 관리자
     var peripheral: CBPeripheral?  //현재 연결된 주변 기기
     
+    //상태변화를 자동감지
     @Published var isConnected = false
     @Published var peripherals: [CBPeripheral] = []   //발견된 기기를 저장하는 배열
     @Published var isScanning = false // 스캔 상태 변수
@@ -25,7 +26,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
-    // Bluetooth가 켜져 있으면 주변 기기를 검색
+    // CBCentralManager상태가 변경될때 호출
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             // Bluetooth가 켜져 있을 때의 상태 처리
@@ -37,7 +38,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     // 스캔 시작 메서드
     func startScanning() {
         peripherals.removeAll()
-        centralManager?.scanForPeripherals(withServices: nil, options: nil)
+        centralManager?.scanForPeripherals(withServices: nil, options: nil) //매개변수 넘겨주면 특정 서비스만 스캔가능
         isScanning = true
         print("스캔 시작")
     }
@@ -51,7 +52,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     
     // 새로운 주변 기기를 발견할 때
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if let name = peripheral.name, !name.isEmpty, !peripherals.contains(where: { $0.identifier == peripheral.identifier }) {
+        if let name = peripheral.name, !name.isEmpty, !peripherals.contains(where: { $0.identifier == peripheral.identifier }) { //기기이름이 null이 아닐때만 배열에 추가
             peripherals.append(peripheral)
         }
     }
@@ -102,7 +103,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
-//                print("특성 발견: \(characteristic.uuid)")
+                //print("특성 발견: \(characteristic.uuid)")
                 
                 // 읽기 가능한 특성의 값을 읽음
                 if characteristic.properties.contains(.read) {
