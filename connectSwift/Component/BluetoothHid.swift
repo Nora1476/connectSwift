@@ -8,54 +8,73 @@
 import SwiftUI
 
 struct BluetoothHid: View {
-    @StateObject var bluetoothManager = BluetoothHIDManager()
-    
+    @ObservedObject var bluetoothHIDManager = BluetoothHIDManager() //객체 초기화됨시롱 init() 매서드 호출
+
     var body: some View {
         VStack {
-            Text("Bluetooth HID Keyboard")
-                .font(.title2)
-                .padding()
-            
-            if bluetoothManager.isConnected {
-                Text("Connected")
-                    .foregroundColor(.green)
+            if bluetoothHIDManager.isPoweredOn {
+                Text("Bluetooth is powered on")
             } else {
-                Text("Connecting...")
-                    .foregroundColor(.red)
+                Text("Bluetooth is not powered on")
             }
             
-            List {
-                ForEach(bluetoothManager.peripherals, id: \.identifier) { device in
-                    Button(action: {
-                        bluetoothManager.connectToDevice(device)
-                    }) {
-                        Text(device.name ?? "Unknown")
-                            .foregroundColor(.blue)
-                    }
-                }
+            if bluetoothHIDManager.isAdvertising {
+                Text("Advertising as HID device")
+            } else {
+                Text("Not advertising")
             }
-            .padding()
-            
+
             HStack {
-                ForEach(1..<5) { number in
-                    Button(action: {
-                        bluetoothManager.sendKeyboardInput(UInt8(number))
-                    }) {
-                        Text("\(number)")
-                            .font(.largeTitle)
-                            .frame(width: 60, height: 60)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(5)
-                    }
+                Button(action: {
+                    let reportData = Data([0x31]) // 아스키코드 1
+                    bluetoothHIDManager.sendHIDReport(data: reportData)
+                }) {
+                    Text("1")
+                        .frame(width: 50, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
+                .padding()
+
+                Button(action: {
+                    let reportData = Data([0x32]) // 아스키코드 2
+                    bluetoothHIDManager.sendHIDReport(data: reportData)
+                }) {
+                    Text("2")
+                        .frame(width: 50, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+
+                Button(action: {
+                    let reportData = Data([0x33]) // 아스키코드 3
+                    bluetoothHIDManager.sendHIDReport(data: reportData)
+                }) {
+                    Text("3")
+                        .frame(width: 50, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+
+                Button(action: {
+                    let reportData = Data([0x34]) // 아스키코드 4
+                    bluetoothHIDManager.sendHIDReport(data: reportData)
+                }) {
+                    Text("4")
+                        .frame(width: 50, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
             }
         }
         .padding()
-        .onAppear {
-                   bluetoothManager.startScanning()
-               }
     }
 }
 
