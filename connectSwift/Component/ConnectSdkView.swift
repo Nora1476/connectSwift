@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import ConnectSDK
 
 struct ConnectSdkView: View {
+    var webOsService : WebOSTVService?
+    var device : ConnectableDevice?
 
     var body: some View {
         VStack {
