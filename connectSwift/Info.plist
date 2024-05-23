@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleGetInfoString</key>
-	<string></string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>bluetooth-central</string>
-		<string>external-accessory</string>
-		<string>processing</string>
-	</array>
-    <key>NSAppTransportSecurity</key>
     <dict>
-        <key>NSAllowsArbitraryLoads</key><true/>
+        <key>CFBundleGetInfoString</key>
+        <string></string>
+        <key>UIBackgroundModes</key>
+        <array>
+            <string>bluetooth-central</string>
+            <string>external-accessory</string>
+            <string>processing</string>
+        </array>
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSAllowsArbitraryLoads</key>
+            <true/>
+        </dict>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>We need your location to access Wi-Fi information</string>
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>We need your location to access Wi-Fi information always</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>We need your location to access Wi-Fi information when the app is in use or in the background</string>
+        <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+        <dict>
+            <key>TemporaryPreciseLocationUsageDescription</key>
+            <string>To access Wi-Fi information precisely</string>
+        </dict>
     </dict>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>위치권한</string>
-    <key>NSLocationUsageDescription</key>
-    <string>위치권한</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>위치권한</string>
-</dict>
 </plist>
