@@ -20,7 +20,7 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil) //초기화
     }
 
-    func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+    func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) { //블루투스 상태가 변경될때마다 호출
         isPoweredOn = peripheral.state == .poweredOn //값설정 ture반환
         if isPoweredOn {
             setupPeripheral()
@@ -41,23 +41,30 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
         reportCharacteristic = CBMutableCharacteristic(type: reportUUID, properties: [.read, .notify], value: nil, permissions: [.readable])
 
         hidService.characteristics = [hidInfoCharacteristic, reportCharacteristic].compactMap { $0 }
-        peripheralManager?.add(hidService)
+        peripheralManager?.add(hidService) //서비스 추가
 
         startAdvertising()
     }
 
-    func startAdvertising() {
+    func startAdvertising() { //광고 시작
         let advertisementData: [String: Any] = [
             CBAdvertisementDataLocalNameKey: "MyHIDDevice",
             CBAdvertisementDataServiceUUIDsKey: [CBUUID(string: "1812")]
         ]
         peripheralManager?.startAdvertising(advertisementData)
         isAdvertising = true
+        print("광고 시작!")
     }
+    func stopAdvertising() { // 광고 멈춤
+            peripheralManager?.stopAdvertising()
+            isAdvertising = false
+            print("광고 멈춤")
+        }
 
     func sendHIDReport(data: Data) {
         guard let reportCharacteristic = reportCharacteristic else { return }
-        peripheralManager?.updateValue(data, for: reportCharacteristic, onSubscribedCentrals: nil)
+        peripheralManager?.updateValue(data, for: reportCharacteristic, onSubscribedCentrals: nil) //아스키코드 전송
+        print("코드 전송 \(data)")
     }
 
     // 중앙 장치가 특성에 구독했을 때
@@ -79,3 +86,5 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
         print("Service added: \(service.uuid)")
     }
 }
+
+

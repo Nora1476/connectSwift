@@ -7,6 +7,8 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
+		<string>external-accessory</string>
+		<string>processing</string>
 	</array>
 </dict>
 </plist>

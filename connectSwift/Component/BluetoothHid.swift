@@ -8,22 +8,46 @@
 import SwiftUI
 
 struct BluetoothHid: View {
-    @ObservedObject var bluetoothHIDManager = BluetoothHIDManager() //객체 초기화됨시롱 init() 매서드 호출
-
+    @ObservedObject var bluetoothHIDManager = BluetoothHIDManager()
+    
     var body: some View {
         VStack {
-            if bluetoothHIDManager.isPoweredOn {
-                Text("Bluetooth is powered on")
-            } else {
-                Text("Bluetooth is not powered on")
+            HStack {
+                Button(action: {
+                    bluetoothHIDManager.startAdvertising()
+                }) {
+                    Text("Start")
+                        .frame(width: 150, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+                
+                Button(action: {
+                    bluetoothHIDManager.stopAdvertising()
+                }) {
+                    Text("Stop")
+                        .frame(width: 150, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
             }
-            
-            if bluetoothHIDManager.isAdvertising {
-                Text("Advertising as HID device")
-            } else {
-                Text("Not advertising")
+            VStack {
+                if bluetoothHIDManager.isPoweredOn {
+                    Text("Bluetooth is powered on")
+                } else {
+                    Text("Bluetooth is not powered on")
+                }
+                
+                if bluetoothHIDManager.isAdvertising {
+                    Text("Advertising as HID device")
+                } else {
+                    Text("Not advertising")
+                }
             }
-
             HStack {
                 Button(action: {
                     let reportData = Data([0x31]) // 아스키코드 1
@@ -36,7 +60,7 @@ struct BluetoothHid: View {
                         .cornerRadius(10)
                 }
                 .padding()
-
+                
                 Button(action: {
                     let reportData = Data([0x32]) // 아스키코드 2
                     bluetoothHIDManager.sendHIDReport(data: reportData)
@@ -48,7 +72,7 @@ struct BluetoothHid: View {
                         .cornerRadius(10)
                 }
                 .padding()
-
+                
                 Button(action: {
                     let reportData = Data([0x33]) // 아스키코드 3
                     bluetoothHIDManager.sendHIDReport(data: reportData)
@@ -60,7 +84,7 @@ struct BluetoothHid: View {
                         .cornerRadius(10)
                 }
                 .padding()
-
+                
                 Button(action: {
                     let reportData = Data([0x34]) // 아스키코드 4
                     bluetoothHIDManager.sendHIDReport(data: reportData)
