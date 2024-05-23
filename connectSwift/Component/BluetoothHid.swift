@@ -74,10 +74,12 @@ struct BluetoothHid: View {
                 .padding()
                 
                 Button(action: {
-                    let reportData = Data([0x33]) // 아스키코드 3
-                    bluetoothHIDManager.sendHIDReport(data: reportData)
+                    let reportData = "Hello"
+                    if let data = reportData.data(using: .ascii){
+                        bluetoothHIDManager.sendHIDReport(data: data)
+                    }
                 }) {
-                    Text("3")
+                    Text("Hello")
                         .frame(width: 50, height: 50)
                         .background(Color.blue)
                         .foregroundColor(.white)
@@ -85,17 +87,6 @@ struct BluetoothHid: View {
                 }
                 .padding()
                 
-                Button(action: {
-                    let reportData = Data([0x34]) // 아스키코드 4
-                    bluetoothHIDManager.sendHIDReport(data: reportData)
-                }) {
-                    Text("4")
-                        .frame(width: 50, height: 50)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding()
             }
         }
         .padding()

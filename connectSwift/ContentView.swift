@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import ConnectSDK
 
 struct ContentView: View {
+    var webOsService : WebOSTVService?
+    var device : ConnectableDevice?
+    
     var body: some View {
         NavigationView {
             VStack(alignment:.leading) {

@@ -5,7 +5,6 @@
 //  Created by BonghuiJo on 5/22/24.
 //
 
-
 import Foundation
 import CoreBluetooth
 
@@ -17,36 +16,36 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
 
     override init() {
         super.init()
-        peripheralManager = CBPeripheralManager(delegate: self, queue: nil) //초기화
+        peripheralManager = CBPeripheralManager(delegate: self, queue: nil) // 초기화
     }
 
-    func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) { //블루투스 상태가 변경될때마다 호출
-        isPoweredOn = peripheral.state == .poweredOn //값설정 ture반환
+    func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) { // 블루투스 상태가 변경될 때마다 호출
+        isPoweredOn = peripheral.state == .poweredOn // 값 설정 true 반환
         if isPoweredOn {
             setupPeripheral()
         }
     }
 
-    func setupPeripheral() { //주변창치로 동작하기 위한 설정
-        let hidServiceUUID = CBUUID(string: "1812") //HID 서비스 UUID
-        let hidService = CBMutableService(type: hidServiceUUID, primary: true) //HID 서비스를 정의
+    func setupPeripheral() { // 주변 장치로 동작하기 위한 설정
+        let customServiceUUID = CBUUID(string: "1812")
+               let customService = CBMutableService(type: customServiceUUID, primary: true) // 맞춤형 서비스를 정의
 
-        // HID 정보 특성
-        let hidInfoUUID = CBUUID(string: "2A4A") //HID 정보 특성 UUID
-        let hidInfoData = Data([0x01, 0x01, 0x00])
-        let hidInfoCharacteristic = CBMutableCharacteristic(type: hidInfoUUID, properties: [.read], value: hidInfoData, permissions: [.readable]) //CBMutableCharacteristic 객체를 생성하여 HID 정보 특성을 정의
+               // HID 정보 특성
+               let hidInfoUUID = CBUUID(string: "2A4A") // HID 정보 특성 UUID
+               let hidInfoData = Data([0x01, 0x01, 0x00])
+               let hidInfoCharacteristic = CBMutableCharacteristic(type: hidInfoUUID, properties: [.read], value: hidInfoData, permissions: [.readable]) // CBMutableCharacteristic 객체를 생성하여 HID 정보 특성을 정의
 
-        // HID 보고서 특성
-        let reportUUID = CBUUID(string: "2A4D")
-        reportCharacteristic = CBMutableCharacteristic(type: reportUUID, properties: [.read, .notify], value: nil, permissions: [.readable])
+               // HID 보고서 특성
+               let reportUUID = CBUUID(string: "2A4D")
+               reportCharacteristic = CBMutableCharacteristic(type: reportUUID, properties: [.read, .notify], value: nil, permissions: [.readable])
 
-        hidService.characteristics = [hidInfoCharacteristic, reportCharacteristic].compactMap { $0 }
-        peripheralManager?.add(hidService) //서비스 추가
+               customService.characteristics = [hidInfoCharacteristic, reportCharacteristic].compactMap { $0 }
+               peripheralManager?.add(customService) // 서비스 추가
 
         startAdvertising()
     }
 
-    func startAdvertising() { //광고 시작
+    func startAdvertising() { // 광고 시작
         let advertisementData: [String: Any] = [
             CBAdvertisementDataLocalNameKey: "MyHIDDevice",
             CBAdvertisementDataServiceUUIDsKey: [CBUUID(string: "1812")]
@@ -55,36 +54,26 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
         isAdvertising = true
         print("광고 시작!")
     }
+
     func stopAdvertising() { // 광고 멈춤
-            peripheralManager?.stopAdvertising()
-            isAdvertising = false
-            print("광고 멈춤")
-        }
+        peripheralManager?.stopAdvertising()
+        isAdvertising = false
+        print("광고 멈춤")
+    }
 
     func sendHIDReport(data: Data) {
         guard let reportCharacteristic = reportCharacteristic else { return }
-        peripheralManager?.updateValue(data, for: reportCharacteristic, onSubscribedCentrals: nil) //아스키코드 전송
+        peripheralManager?.updateValue(data, for: reportCharacteristic, onSubscribedCentrals: nil) // HID 보고서 데이터 전송
         print("코드 전송 \(data)")
     }
 
-    // 중앙 장치가 특성에 구독했을 때
-    func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
-        print("Central subscribed to characteristic: \(characteristic.uuid)")
-    }
-
-    // 중앙 장치가 특성 구독을 해제했을 때
-    func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFrom characteristic: CBCharacteristic) {
-        print("Central unsubscribed from characteristic: \(characteristic.uuid)")
-    }
-
-    // 중앙 장치가 주변 장치에 연결되었을 때
+    // 서비스가 추가되었을 때
     func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
         if let error = error {
-            print("Error adding service: \(error.localizedDescription)")
+            print("Error adding service: \(error)")
             return
         }
         print("Service added: \(service.uuid)")
     }
+    
 }
-
-

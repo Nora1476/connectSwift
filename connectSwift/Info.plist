@@ -10,5 +10,15 @@
 		<string>external-accessory</string>
 		<string>processing</string>
 	</array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key><true/>
+    </dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>위치권한</string>
+    <key>NSLocationUsageDescription</key>
+    <string>위치권한</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>위치권한</string>
 </dict>
 </plist>

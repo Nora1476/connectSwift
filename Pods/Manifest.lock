@@ -1,0 +1,43 @@
+PODS:
+  - ConnectSDK (2.0.0):
+    - ConnectSDK/Core (= 2.0.0)
+    - ConnectSDK/GoogleCast (= 2.0.0)
+    - ConnectSDK/no-arc (= 2.0.0)
+  - ConnectSDK/Core (2.0.0):
+    - ConnectSDK/no-arc
+  - ConnectSDK/GoogleCast (2.0.0):
+    - ConnectSDK/Core
+    - google-cast-sdk (= 2.7.1)
+  - ConnectSDK/no-arc (2.0.0)
+  - google-cast-sdk (2.7.1):
+    - google-cast-sdk/Assets (= 2.7.1)
+    - google-cast-sdk/Core (= 2.7.1)
+  - google-cast-sdk/Assets (2.7.1):
+    - google-cast-sdk/Core
+  - google-cast-sdk/Core (2.7.1)
+
+DEPENDENCIES:
+  - ConnectSDK (from `https://github.com/ConnectSDK/Connect-SDK-iOS.git`)
+
+SPEC REPOS:
+  trunk:
+    - google-cast-sdk
+
+EXTERNAL SOURCES:
+  ConnectSDK:
+    :git: https://github.com/ConnectSDK/Connect-SDK-iOS.git
+    :submodules: true
+
+CHECKOUT OPTIONS:
+  ConnectSDK:
+    :commit: 6f1ebfdb6d09c33d3c4fa3e6e58cc972f7239887
+    :git: https://github.com/ConnectSDK/Connect-SDK-iOS.git
+    :submodules: true
+
+SPEC CHECKSUMS:
+  ConnectSDK: 9c231b4d1b7d3e9592e0045b0b0b09cf77eb244b
+  google-cast-sdk: 9c98a8fbe8277277ab01a3318ee965c9aef3d4c9
+
+PODFILE CHECKSUM: 5fb5c23ef0960bfc810ac67cc5fe871ec2f3bf28
+
+COCOAPODS: 1.15.2
