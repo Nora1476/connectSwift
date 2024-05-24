@@ -10,12 +10,15 @@ import ConnectSDK
 
 
 class WebOSTVService:NSObject{
-    private var device: ConnectableDevice?
+    private var mDevice: ConnectableDevice?
     private var webOSService: WebOSTVService?
     
     func initialize(device: ConnectableDevice){
-        
+        mDevice = device
+        device.setPairingType(DeviceServicePairingTypeNone)
     }
+    
+    
     
     
 }
