@@ -22,7 +22,7 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) { // 블루투스 상태가 변경될 때마다 호출
         isPoweredOn = peripheral.state == .poweredOn // 값 설정 true 반환
         if isPoweredOn {
-            setupPeripheral()
+//            setupPeripheral()
         }
     }
 

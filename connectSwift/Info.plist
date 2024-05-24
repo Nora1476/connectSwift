@@ -17,10 +17,13 @@
         </dict>
         <key>NSLocationWhenInUseUsageDescription</key>
         <string>We need your location to access Wi-Fi information</string>
+        
         <key>NSLocationAlwaysUsageDescription</key>
         <string>We need your location to access Wi-Fi information always</string>
+        
         <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
         <string>We need your location to access Wi-Fi information when the app is in use or in the background</string>
+        
         <key>NSLocationTemporaryUsageDescriptionDictionary</key>
         <dict>
             <key>TemporaryPreciseLocationUsageDescription</key>
