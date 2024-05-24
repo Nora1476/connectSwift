@@ -7,26 +7,25 @@
 
 import SwiftUI
 import ConnectSDK
-
 struct ConnectSdkView: View {
-    var webOsService : WebOSTVService?
-    var device : ConnectableDevice?
-
+    @StateObject private var discoveryListener = DiscoveryListener()
     var body: some View {
         VStack {
-            HStack {
-                Text("connectSDK Test")
-                    .font(.title2)
+            Button(action: {
+                discoveryListener.startScan()
+            }) {
+                Text("Start Scan")
                     .padding()
-                Spacer()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
             }
             Spacer()
-
         }
         .navigationTitle("ConnectSDK View")
     }
 }
-
 #Preview {
     ConnectSdkView()
 }
+
