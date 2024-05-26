@@ -8,28 +8,28 @@
 import Foundation
 import ConnectSDK
 import CoreLocation
-import NetworkExtension
-
+import SwiftUI
 
 class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, CLLocationManagerDelegate {
     private var discoveryManager: DiscoveryManager?
     private var locationManager: CLLocationManager!
-    
-    @Published var devices: [ConnectableDevice] = [] // 디바이스 목록을 저장수
-    
+    @Published var webOSTVService = WebOSTVService()
+
+    @Published var devices: [ConnectableDevice] = []
+    @Published var deviceCount: Int = 0
+
     override init() {
         super.init()
         initialize()
     }
-    
-    //위치권한 허용
+
     private func setupLocationManager() {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
     }
-    // 위치권한 권한허용 요청
+
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             print("Location access granted.")
@@ -37,40 +37,50 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
             print("Location access denied.")
         }
     }
-    
+
     func initialize() {
         setupLocationManager()
-        
         discoveryManager = DiscoveryManager.shared()
         discoveryManager?.delegate = self
-        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
-        
+        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn 
+        discoveryManager?.startDiscovery()
         print("initialize")
     }
-    
+
     func startScan() {
+        devices.removeAll()
+        deviceCount = 0
+        discoveryManager?.stopDiscovery()
         discoveryManager?.startDiscovery()
-//        discoveryManager?.devicePicker()
         print("디바이스 스캔 시작")
     }
-    
-    
-     // DiscoveryManagerDelegate methods
-     func discoveryManager(_ manager: DiscoveryManager!, didFind device: ConnectableDevice!) {
-         print("onDeviceAdded: \(String(describing: device))")
-         devices.append(device)
-     }
-     
-     func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
-         print("onDeviceUpdated: \(String(describing: device))")
-         if let index = devices.firstIndex(of: device) {
-             devices[index] = device
-         }
-     }
-    func discoveryManager(_ manager: DiscoveryManager!, didLose device: ConnectableDevice!) {
-        print("onDeviceRemoved: \(String(describing: device))")
-        devices.removeAll { $0 == device }
+
+    func connectToDevice(_ device: ConnectableDevice) {
+        webOSTVService.initialize(device: device)
     }
+
+    // DiscoveryManagerDelegate methods
+    func discoveryManager(_ manager: DiscoveryManager!, didFind device: ConnectableDevice!) {
+        print("onDeviceAdded: \(String(describing: device.friendlyName))")
+        devices.append(device)
+        deviceCount = devices.count
+        print("현재 디바이스 수: \(deviceCount)")
+    }
+
+    func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
+        print("onDeviceUpdated: \(String(describing: device.friendlyName))")
+        if let index = devices.firstIndex(of: device) {
+            devices[index] = device
+        }
+    }
+
+    func discoveryManager(_ manager: DiscoveryManager!, didLose device: ConnectableDevice!) {
+        print("onDeviceRemoved: \(String(describing: device.friendlyName))")
+        devices.removeAll { $0 == device }
+        deviceCount = devices.count
+        print("현재 디바이스 수: \(deviceCount)")
+    }
+
     func discoveryManager(_ manager: DiscoveryManager!, discoveryFailed error: Error!) {
         print("onDiscoveryFailed: \(String(describing: error))")
     }
