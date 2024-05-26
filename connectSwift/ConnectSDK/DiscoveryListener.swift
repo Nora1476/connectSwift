@@ -15,7 +15,8 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     private var discoveryManager: DiscoveryManager?
     private var locationManager: CLLocationManager!
     
-    @Published var devices: [ConnectableDevice] = [] // 디바이스 목록을 저장수
+    @Published var devices: [ConnectableDevice] = [] // 디바이스 목록을 저장
+    @Published var selectedDevice: ConnectableDevice?
     
     override init() {
         super.init()
@@ -50,7 +51,7 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     
     func startScan() {
         discoveryManager?.startDiscovery()
-//        discoveryManager?.devicePicker()
+        discoveryManager?.devicePicker()
         print("디바이스 스캔 시작")
     }
     

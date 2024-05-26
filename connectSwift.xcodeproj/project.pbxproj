@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		400144A0144B61C1B285DF24 /* Pods_connectSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98602FCC28ABCA5615347ED9 /* Pods_connectSwift.framework */; };
+		882740DE2C007AC800AB7559 /* DevicePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882740DD2C007AC800AB7559 /* DevicePickerManager.swift */; };
+		882740E02C0087FB00AB7559 /* ContentView-1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882740DF2C0087FB00AB7559 /* ContentView-1.swift */; };
+		882740EA2C00880900AB7559 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882740E12C00880900AB7559 /* Color+Extensions.swift */; };
+		882740EB2C00880900AB7559 /* NeumorphismButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882740E32C00880900AB7559 /* NeumorphismButtonStyle.swift */; };
+		882740EC2C00880900AB7559 /* ThemeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882740E42C00880900AB7559 /* ThemeSettings.swift */; };
+		882740ED2C00880900AB7559 /* NeumorphisumButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882740E62C00880900AB7559 /* NeumorphisumButton.swift */; };
+		882740EE2C00880900AB7559 /* NeumorphismModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882740E82C00880900AB7559 /* NeumorphismModifier.swift */; };
 		882B35D92BFADCAD00CD36FD /* connectSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B35D82BFADCAD00CD36FD /* connectSwiftApp.swift */; };
 		882B35DB2BFADCAD00CD36FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B35DA2BFADCAD00CD36FD /* ContentView.swift */; };
 		882B35DD2BFADCAF00CD36FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B35DC2BFADCAF00CD36FD /* Assets.xcassets */; };
@@ -47,6 +54,13 @@
 		10557056FFAD63254025BE10 /* Pods-connectSwift-connectSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-connectSwift-connectSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-connectSwift-connectSwiftUITests/Pods-connectSwift-connectSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D88DD29F26DB3843CFC1777 /* Pods-connectSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-connectSwift.debug.xcconfig"; path = "Target Support Files/Pods-connectSwift/Pods-connectSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		87BA7B9F057841FBBB4233CC /* Pods-connectSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-connectSwift.release.xcconfig"; path = "Target Support Files/Pods-connectSwift/Pods-connectSwift.release.xcconfig"; sourceTree = "<group>"; };
+		882740DD2C007AC800AB7559 /* DevicePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePickerManager.swift; sourceTree = "<group>"; };
+		882740DF2C0087FB00AB7559 /* ContentView-1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ContentView-1.swift"; path = "../../../../Downloads/LgGamePadIOS/ContentView-1.swift"; sourceTree = "<group>"; };
+		882740E12C00880900AB7559 /* Color+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		882740E32C00880900AB7559 /* NeumorphismButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeumorphismButtonStyle.swift; sourceTree = "<group>"; };
+		882740E42C00880900AB7559 /* ThemeSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeSettings.swift; sourceTree = "<group>"; };
+		882740E62C00880900AB7559 /* NeumorphisumButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeumorphisumButton.swift; sourceTree = "<group>"; };
+		882740E82C00880900AB7559 /* NeumorphismModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeumorphismModifier.swift; sourceTree = "<group>"; };
 		882B35D52BFADCAD00CD36FD /* connectSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = connectSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B35D82BFADCAD00CD36FD /* connectSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connectSwiftApp.swift; sourceTree = "<group>"; };
 		882B35DA2BFADCAD00CD36FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -98,6 +112,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		882740E22C00880900AB7559 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				882740E12C00880900AB7559 /* Color+Extensions.swift */,
+			);
+			name = Extensions;
+			path = ../../../../Downloads/LgGamePadIOS/Extensions;
+			sourceTree = "<group>";
+		};
+		882740E52C00880900AB7559 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				882740E32C00880900AB7559 /* NeumorphismButtonStyle.swift */,
+				882740E42C00880900AB7559 /* ThemeSettings.swift */,
+			);
+			name = Models;
+			path = ../../../../Downloads/LgGamePadIOS/Models;
+			sourceTree = "<group>";
+		};
+		882740E72C00880900AB7559 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				882740E62C00880900AB7559 /* NeumorphisumButton.swift */,
+			);
+			name = Views;
+			path = ../../../../Downloads/LgGamePadIOS/Views;
+			sourceTree = "<group>";
+		};
+		882740E92C00880900AB7559 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				882740E82C00880900AB7559 /* NeumorphismModifier.swift */,
+			);
+			name = Modifiers;
+			path = ../../../../Downloads/LgGamePadIOS/Modifiers;
+			sourceTree = "<group>";
+		};
 		882B35CC2BFADCAD00CD36FD = {
 			isa = PBXGroup;
 			children = (
@@ -121,11 +172,16 @@
 		882B35D72BFADCAD00CD36FD /* connectSwift */ = {
 			isa = PBXGroup;
 			children = (
+				882740E22C00880900AB7559 /* Extensions */,
+				882740E52C00880900AB7559 /* Models */,
+				882740E92C00880900AB7559 /* Modifiers */,
+				882740E72C00880900AB7559 /* Views */,
 				88CFCE1A2BFDB27600FAA10E /* Info.plist */,
 				884BFDB32BFF406A00CC0961 /* ConnectSDK */,
 				8853D50A2BFC3BFF000BC8CA /* Bluetooth */,
 				882B36032BFAE0DE00CD36FD /* Component */,
 				882B35D82BFADCAD00CD36FD /* connectSwiftApp.swift */,
+				882740DF2C0087FB00AB7559 /* ContentView-1.swift */,
 				882B35DA2BFADCAD00CD36FD /* ContentView.swift */,
 				882B35DC2BFADCAF00CD36FD /* Assets.xcassets */,
 				882B35DE2BFADCAF00CD36FD /* connectSwift.entitlements */,
@@ -157,6 +213,7 @@
 			children = (
 				884BFDB42BFF413600CC0961 /* WebOSTVService.swift */,
 				8850DCD92C00356F00E5B6EF /* DiscoveryListener.swift */,
+				882740DD2C007AC800AB7559 /* DevicePickerManager.swift */,
 			);
 			path = ConnectSDK;
 			sourceTree = "<group>";
@@ -468,14 +525,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				882740DE2C007AC800AB7559 /* DevicePickerManager.swift in Sources */,
+				882740EB2C00880900AB7559 /* NeumorphismButtonStyle.swift in Sources */,
 				884BFDB52BFF413600CC0961 /* WebOSTVService.swift in Sources */,
+				882740E02C0087FB00AB7559 /* ContentView-1.swift in Sources */,
 				8853D50C2BFC3EB8000BC8CA /* BluetoothManager.swift in Sources */,
 				8850DCDA2C00356F00E5B6EF /* DiscoveryListener.swift in Sources */,
 				88CFCE1C2BFDBC8D00FAA10E /* BluetoothHIDManager.swift in Sources */,
 				8853D5062BFC2B18000BC8CA /* BluetoothBle.swift in Sources */,
+				882740EA2C00880900AB7559 /* Color+Extensions.swift in Sources */,
 				882B36052BFAE0FC00CD36FD /* ConnectSdkView.swift in Sources */,
 				882B35DB2BFADCAD00CD36FD /* ContentView.swift in Sources */,
+				882740ED2C00880900AB7559 /* NeumorphisumButton.swift in Sources */,
 				88CFCE192BFD94A700FAA10E /* BluetoothHid.swift in Sources */,
+				882740EE2C00880900AB7559 /* NeumorphismModifier.swift in Sources */,
+				882740EC2C00880900AB7559 /* ThemeSettings.swift in Sources */,
 				882B35D92BFADCAD00CD36FD /* connectSwiftApp.swift in Sources */,
 				8852D3912BFEF01E00725E43 /* BluetoothHidCopy.swift in Sources */,
 			);
@@ -563,7 +627,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -619,7 +683,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -656,7 +720,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.0;
@@ -700,7 +764,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.0;

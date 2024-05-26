@@ -8,6 +8,7 @@
 import SwiftUI
 import ConnectSDK
 struct ConnectSdkView: View {
+//    @StateObject private var devicePicker = DevicePickerManager()
     @StateObject private var discoveryListener = DiscoveryListener()
     var body: some View {
         VStack {
