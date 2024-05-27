@@ -14,7 +14,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     
     func initialize(device: ConnectableDevice) {
         mDevice = device
-        mDevice?.setPairingType(DeviceServicePairingTypeFirstScreen) // 수정됨: DeviceServicePairingTypeNone에서 변경
+        mDevice?.setPairingType(DeviceServicePairingTypeNone) 
         mDevice?.delegate = self
         mDevice?.connect()
     }
