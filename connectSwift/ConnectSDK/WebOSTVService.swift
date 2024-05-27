@@ -17,24 +17,29 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
-        mDevice?.setPairingType(DeviceServicePairingTypeNone)
-        mDevice?.connect()
-        
-        DiscoveryListener().stopScan()
+        mDevice?.setPairingType(DeviceServicePairingTypeFirstScreen)
         print("연결 성공")
     }
     
     
     func volumeUp(){
-        webOSService?.volumeUp()
+//        webOSService?.volumeUp()
+        mDevice?.volumeControl().volumeUp(success: { _ in
+            print("volume up")
+        }, failure: { error in
+            print("volume up error \(error)")
+        })
+        print("음량 ↑")
     }
     func volumeDown(){
-        webOSService?.volumeDown()
+//        webOSService?.volumeDown()
+        mDevice?.volumeControl().volumeDown(success: { _ in
+            print("volume up")
+        }, failure: { error in
+            print("volume up error \(error)")
+        })
+        print("음량 ↓")
     }
-    
-    
-    
-    
     
     
     
@@ -42,6 +47,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
         connectionStatus = "Connected to \(device.friendlyName ?? "Unknown Device")"
         print(connectionStatus)
+        
     }
     
     func connectableDeviceDisconnected(_ device: ConnectableDevice!, withError error: Error!) {
