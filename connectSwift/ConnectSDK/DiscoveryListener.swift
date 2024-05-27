@@ -13,8 +13,8 @@ import SwiftUI
 class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, CLLocationManagerDelegate {
     private var discoveryManager: DiscoveryManager?
     private var locationManager: CLLocationManager!
+    
     @Published var webOSTVService = WebOSTVService()
-
     @Published var devices: [ConnectableDevice] = []
     @Published var deviceCount: Int = 0
 
@@ -40,35 +40,50 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
 
     func initialize() {
         setupLocationManager()
+        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         discoveryManager = DiscoveryManager.shared()
         discoveryManager?.delegate = self
-        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn 
-        discoveryManager?.startDiscovery()
+        
+//        discoveryManager?.startDiscovery()
+//        discoveryManager?.capabilityFilters = [
+//            kVolumeControlVolumeUpDown
+//        ]
         print("initialize")
     }
-
+    
     func startScan() {
         devices.removeAll()
         deviceCount = 0
-        discoveryManager?.stopDiscovery()
         discoveryManager?.startDiscovery()
         print("디바이스 스캔 시작")
+    }
+    
+    func stopScan() {
+        discoveryManager?.stopDiscovery()
+        print("디바이스 스캔 중지")
     }
 
     func connectToDevice(_ device: ConnectableDevice) {
         webOSTVService.initialize(device: device)
     }
 
+    
     // DiscoveryManagerDelegate methods
     func discoveryManager(_ manager: DiscoveryManager!, didFind device: ConnectableDevice!) {
-        print("onDeviceAdded: \(String(describing: device.friendlyName))")
-        devices.append(device)
-        deviceCount = devices.count
-        print("현재 디바이스 수: \(deviceCount)")
+//        DispatchQueue.main.async {
+//        }
+        
+            print("onDeviceAdded: \(String(describing: device.friendlyName))")
+            self.devices.append(device)
+            self.deviceCount = self.devices.count
+            print("현재 디바이스 수: \(self.deviceCount)")
+//            if(self.devices.count != 0) {
+//                self.discoveryManager?.stopDiscovery()
+//            }
     }
 
     func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
-        print("onDeviceUpdated: \(String(describing: device.friendlyName))")
+        print("onDeviceUpdated: \(String(describing: device.friendlyName))\(String(describing: device.services))\(String(describing: device.id))\(String(describing: device.description)) ")
         if let index = devices.firstIndex(of: device) {
             devices[index] = device
         }
