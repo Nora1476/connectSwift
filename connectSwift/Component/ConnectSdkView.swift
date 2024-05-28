@@ -36,7 +36,7 @@ struct ConnectSdkView: View {
                         .cornerRadius(8)
                 }
             }
-        
+            
             
             Spacer(minLength: 20)
             
@@ -71,10 +71,19 @@ struct ConnectSdkView: View {
                         .cornerRadius(8)
                 }
             }
-            
             Spacer()
             
-           
+            HStack{
+                Button(action: {
+                    webOSTVService.keyHome()
+                }){
+                    Text("keyHome")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
         }
         .navigationTitle("ConnectSDK View")
     }

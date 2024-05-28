@@ -40,7 +40,7 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
 
     func initialize() {
         setupLocationManager()
-        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
+//        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         discoveryManager = DiscoveryManager.shared()
         discoveryManager?.delegate = self
         
@@ -64,6 +64,7 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     }
 
     func connectToDevice(_ device: ConnectableDevice) {
+        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         webOSTVService.initialize(device: device)
     }
 
