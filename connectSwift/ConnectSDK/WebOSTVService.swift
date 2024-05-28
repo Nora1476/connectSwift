@@ -9,17 +9,17 @@ import Foundation
 import ConnectSDK
 
 class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, DeviceServiceDelegate {
-
-
     
     
     private var mDevice: ConnectableDevice?
     private var deviceService: DeviceService?
-    private var webOSService : WebOSTVServiceSocketClientDelegate?
+    private var webOSService : WebOSTVService?
     
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
+        webOSService = device.services.first(where: { $0 is WebOSTVService }) as? WebOSTVService  //WebOSTVService 타입의 첫 번째 서비스를 변수에 할당
+        
         mDevice?.setPairingType(DeviceServicePairingTypePinCode)
         mDevice?.connect()
         print("연결 성공")
@@ -50,6 +50,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         })
     }
     func keyHome(){
+        //        webOSService?.keyHome()
         mDevice?.keyControl().home(success: { _ in
             print("key Home")
         }, failure: { error in
@@ -63,6 +64,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
         print("Connected to \(device.friendlyName ?? "Unknown Device")")
         
+ 
     }
     
     func connectableDeviceDisconnected(_ device: ConnectableDevice!, withError error: Error!) { //기기와 연결 끊어졌을 때
@@ -102,19 +104,14 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func deviceService(_ service: DeviceService!, pairingRequiredOf pairingType: DeviceServicePairingType, withData pairingData: Any!) { //서비스에 페어링이 필요할 때
         print("Pairing required for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
         if pairingType == DeviceServicePairingTypePinCode {
-            print("PIN code required for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
+            print("페어링 핀코드입력 동작: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
         }
     }
-    
     func deviceServicePairingSuccess(_ service: DeviceService!) { //서비스 페어링 완료되었을때
         print("Pairing success for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
     }
-    
     func deviceService(_ service: DeviceService!, pairingFailedWithError error: Error!) { //페어링 실패했을때
         print("Pairing failed with error: \(error.localizedDescription)")
     }
-
-    
-    
     
 }
