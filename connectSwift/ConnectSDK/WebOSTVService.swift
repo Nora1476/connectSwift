@@ -10,6 +10,8 @@ import ConnectSDK
 
 class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, DeviceServiceDelegate {
     @Published var connectionStatus: String = ""
+    
+    
     private var mDevice: ConnectableDevice?
     private var deviceService: DeviceService?
     private var webOSService: WebOSTVService?
@@ -17,7 +19,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
-        mDevice?.setPairingType(DeviceServicePairingTypeFirstScreen)
+        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
         print("연결 성공")
     }
     
@@ -27,7 +29,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         mDevice?.volumeControl().volumeUp(success: { _ in
             print("volume up")
         }, failure: { error in
-            print("volume up error \(error)")
+            print("volume up error \(String(describing: error))")
         })
         print("음량 ↑")
     }
@@ -36,7 +38,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         mDevice?.volumeControl().volumeDown(success: { _ in
             print("volume up")
         }, failure: { error in
-            print("volume up error \(error)")
+            print("volume up error \(String(describing: error))")
         })
         print("음량 ↓")
     }
