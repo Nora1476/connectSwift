@@ -8,10 +8,9 @@
 import Foundation
 import ConnectSDK
 
-class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, DeviceServiceDelegate, WebOSTVServiceSocketClientDelegate {
+class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, DeviceServiceDelegate {
 
-//    @Published var isPairingRequired: Bool = false
-//    @Published var pinCode: String = ""
+
     
     
     private var mDevice: ConnectableDevice?
