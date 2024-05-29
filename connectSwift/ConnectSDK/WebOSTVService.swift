@@ -18,9 +18,17 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
-        webOSService = device.services.first(where: { $0 is WebOSTVService }) as? WebOSTVService  //WebOSTVService 타입의 첫 번째 서비스를 변수에 할당
         
-        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
+                webOSService = device.services.first(where: { $0 is WebOSTVService }) as? WebOSTVService //services배열에서 WebOSTVService 타입의 첫번째 요소를 변수에 할당
+        //        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
+                mDevice?.setPairingType(DeviceServicePairingTypeNone)
+        
+        
+//        guard mDevice?.setPairingType(DeviceServicePairingTypePinCode) != nil else { // setPairingType 설정이 성공하는지 확인
+//            print("setPairingType 설정 실패")
+//            return
+//        }
+        
         mDevice?.connect()
         print("연결 성공")
     }
@@ -57,16 +65,20 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
             print("key home \(String(describing: error))")
         })
     }
+    func inputText(){
+        mDevice?.textInputControl().sendText("Hello", success: { _ in
+            print("send Text 성공")
+        }, failure: { error in
+            print("send Text \(String(describing: error))")
+        })
+    }
     
     
     
     // ConnectableDeviceDelegate 매서드
     func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
         print("Connected to \(device.friendlyName ?? "Unknown Device")")
-        
- 
     }
-    
     func connectableDeviceDisconnected(_ device: ConnectableDevice!, withError error: Error!) { //기기와 연결 끊어졌을 때
         print("Disconnected from \(device.friendlyName ?? "Unknown Device"): \(error.localizedDescription)")
     }
@@ -104,7 +116,9 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func deviceService(_ service: DeviceService!, pairingRequiredOf pairingType: DeviceServicePairingType, withData pairingData: Any!) { //서비스에 페어링이 필요할 때
         print("Pairing required for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
         if pairingType == DeviceServicePairingTypePinCode {
-            print("페어링 핀코드입력 동작: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
+            //            DispatchQueue.main.async {
+            //                self.showPinCodeAlert(service: service)
+            //            }
         }
     }
     func deviceServicePairingSuccess(_ service: DeviceService!) { //서비스 페어링 완료되었을때
@@ -114,4 +128,27 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         print("Pairing failed with error: \(error.localizedDescription)")
     }
     
+    
+    
+    //    private func showPinCodeAlert(service: DeviceService) {
+    //        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+    //              let window = windowScene.windows.first else {
+    //            return
+    //        }
+    //        let alertController = UIAlertController(title: "PIN Code Required", message: "Please enter the PIN code displayed on your TV.", preferredStyle: .alert)
+    //
+    //        alertController.addTextField { (textField) in
+    //            textField.placeholder = "PIN Code"
+    //            textField.keyboardType = .numberPad
+    //        }
+    //        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
+    //            if let pinCode = alertController.textFields?.first?.text {
+    //                service.pair(withData: pinCode)
+    //            }
+    //        }
+    //        alertController.addAction(confirmAction)
+    //        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    //
+    //        window.rootViewController?.present(alertController, animated: true, completion: nil)
+    //    }
 }

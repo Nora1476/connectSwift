@@ -37,7 +37,6 @@ struct ConnectSdkView: View {
                 }
             }
             
-            
             Spacer(minLength: 20)
             
             Text("Discovered Devices: \(discoveryListener.deviceCount)")
@@ -78,6 +77,24 @@ struct ConnectSdkView: View {
                     webOSTVService.keyHome()
                 }){
                     Text("keyHome")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                Button(action: {
+                    webOSTVService.mouseClick()
+                }){
+                    Text("Click")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                Button(action: {
+                    webOSTVService.inputText()
+                }){
+                    Text("✋")
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)

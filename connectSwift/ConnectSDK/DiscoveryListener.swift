@@ -22,7 +22,7 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
         super.init()
         initialize()
     }
-
+    
     private func setupLocationManager() {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
@@ -38,12 +38,13 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
         }
     }
 
+
     func initialize() {
         setupLocationManager()
-//        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
-        discoveryManager = DiscoveryManager.shared()
-        discoveryManager?.delegate = self
         
+        discoveryManager = DiscoveryManager.shared()
+        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
+        discoveryManager?.delegate = self
 //        discoveryManager?.startDiscovery()
 //        discoveryManager?.capabilityFilters = [
 //            kVolumeControlVolumeUpDown
@@ -64,7 +65,6 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     }
 
     func connectToDevice(_ device: ConnectableDevice) {
-        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         webOSTVService.initialize(device: device)
     }
 
@@ -73,7 +73,6 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     func discoveryManager(_ manager: DiscoveryManager!, didFind device: ConnectableDevice!) {
 //        DispatchQueue.main.async {
 //        }
-        
             print("onDeviceAdded: \(String(describing: device.friendlyName))")
             self.devices.append(device)
             self.deviceCount = self.devices.count
@@ -84,7 +83,7 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     }
 
     func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
-        print("onDeviceUpdated: \(String(describing: device.friendlyName))\(String(describing: device.services))\(String(describing: device.id))\(String(describing: device.description)) ")
+        print("onDeviceUpdated: \(String(describing: device.friendlyName))\(String(describing: device.services)) ")
         if let index = devices.firstIndex(of: device) {
             devices[index] = device
         }
@@ -100,4 +99,7 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     func discoveryManager(_ manager: DiscoveryManager!, discoveryFailed error: Error!) {
         print("onDiscoveryFailed: \(String(describing: error))")
     }
+    
+    
+    
 }
