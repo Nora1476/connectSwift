@@ -64,7 +64,7 @@
 		8853D5052BFC2B18000BC8CA /* BluetoothBle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothBle.swift; sourceTree = "<group>"; };
 		8853D50B2BFC3EB8000BC8CA /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		8875B6632C0474E0001A565A /* ControlBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBtn.swift; sourceTree = "<group>"; };
-		887BE5C82C02DC4200C724B8 /* DevicePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DevicePickerManager.swift; path = "../../../connectSwift 복사본/connectSwift/ConnectSDK/DevicePickerManager.swift"; sourceTree = "<group>"; };
+		887BE5C82C02DC4200C724B8 /* DevicePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicePickerManager.swift; sourceTree = "<group>"; };
 		88CFCE182BFD94A700FAA10E /* BluetoothHid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothHid.swift; sourceTree = "<group>"; };
 		88CFCE1A2BFDB27600FAA10E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		88CFCE1B2BFDBC8D00FAA10E /* BluetoothHIDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothHIDManager.swift; sourceTree = "<group>"; };
