@@ -45,16 +45,12 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
         discoveryManager = DiscoveryManager.shared()
         discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         discoveryManager?.delegate = self
-//        discoveryManager?.startDiscovery()
-//        discoveryManager?.capabilityFilters = [
-//            kVolumeControlVolumeUpDown
-//        ]
+
         print("initialize")
     }
     
     func startScan() {
         devices.removeAll()
-        deviceCount = 0
         discoveryManager?.startDiscovery()
         print("디바이스 스캔 시작")
     }
@@ -77,9 +73,6 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
             self.devices.append(device)
             self.deviceCount = self.devices.count
             print("현재 디바이스 수: \(self.deviceCount)")
-//            if(self.devices.count != 0) {
-//                self.discoveryManager?.stopDiscovery()
-//            }
     }
 
     func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {

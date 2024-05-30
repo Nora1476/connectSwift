@@ -9,9 +9,8 @@ import SwiftUI
 import ConnectSDK
 struct ConnectSdkView: View {
     @StateObject private var discoveryListener = DiscoveryListener()
-    //    @StateObject private var devicePicker = DevicePickerManager()
+    @StateObject private var webOSTVService = WebOSTVService()
     
-    private var webOSTVService = WebOSTVService()
     
     //기본버튼
     func basicBtn(text: String)-> some View {
@@ -41,12 +40,23 @@ struct ConnectSdkView: View {
             
             Spacer(minLength: 20)
             
-            Text("Discovered Devices: \(discoveryListener.deviceCount)")
+//            Text("Discovered Devices: \(discoveryListener.deviceCount)")
             List(discoveryListener.devices, id: \.self) { device in
-                Text(device.friendlyName ?? "Unknown Device")
-                    .onTapGesture {
-                        webOSTVService.initialize(device: device)
+                HStack{
+                    Text(device.friendlyName ?? "Unknown Device")
+                    Spacer()
+                    Button(action: {
+                        if webOSTVService.isConnected{
+                            webOSTVService.disConnect()
+                            discoveryListener.devices.removeAll() //연결가능 기기 리스트 초기화
+                        } else{
+                            webOSTVService.initialize(device: device)
+                        }
+                    }){
+                        Text(webOSTVService.isConnected ? "Disconnect" : "Connect")
+                            .foregroundColor(.blue)
                     }
+                }
             }
             if discoveryListener.deviceCount == 0 {
                 Text("No devices found")

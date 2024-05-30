@@ -10,28 +10,45 @@ import ConnectSDK
 
 class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, DeviceServiceDelegate {
     
-    
     private var mDevice: ConnectableDevice?
     private var deviceService: DeviceService?
     private var webOSService : WebOSTVService?
+   
+    
+    @Published var isConnected: Bool = false //연결상태
     
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
+        deviceService?.delegate = self
         
-        //webOSService = device.services.first(where: { $0 is WebOSTVService }) as? WebOSTVService //services배열에서 WebOSTVService 타입의 첫번째 요소를 변수에 할당
-        //mDevice?.setPairingType(DeviceServicePairingTypePinCode)
-        mDevice?.setPairingType(DeviceServicePairingTypeNone)
+//        webOSService = mDevice?.service(withName: "WebOSWervice") as? WebOSTVService
+        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
         
-        mDevice?.service(withName: "webOS TV").connect()
-        print("연결 성공")
+        mDevice?.connect()
+        DispatchQueue.main.async {
+            self.isConnected = true
+            print(self.isConnected)
+        }
+        
+        print("연결 시도")
         print("connectedService : \(String(describing: mDevice?.connectedServiceNames()))")
+        print("requiresPairing : \(String(describing: deviceService?.requiresPairing))")
+    }
+    
+    func disConnect(){
+        mDevice?.disconnect()
+        deviceService?.disconnect()
+        
+        DispatchQueue.main.async{
+            self.isConnected = false
+            
+        }
     }
     
     
     //기기 컨트롤 매서드
     func volumeUp(){
-        //                webOSService?.volumeUp()
         mDevice?.volumeControl().volumeUp(success: { _ in
         print("volume up")
         }, failure: { error in
@@ -39,7 +56,6 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         })
     }
     func volumeDown(){
-        //                webOSService?.volumeDown()
         mDevice?.volumeControl().volumeDown(success: { _ in
             print("volume Down")
         }, failure: { error in
@@ -95,6 +111,12 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     
     
     // ConnectableDeviceDelegate 매서드
+    func connectableDeviceConnectionRequired(_ device: ConnectableDevice!, for service: DeviceService!) {
+        print("ServiceID \(String(describing: service.serviceDescription.serviceId))")
+    }
+    func connectableDevice(_ device: ConnectableDevice!, service: DeviceService!, pairingRequiredOfType pairingType: Int32, withData pairingData: Any!) {
+        print("ServiceID: \(device.friendlyName ?? "Unknown Device")")
+    }
     func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
         print("Connected tooo: \(device.friendlyName ?? "Unknown Device")")
     }
@@ -103,10 +125,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
             print("Disconnected from \(device.friendlyName ?? "Unknown Device"): \(e.localizedDescription)")
         }
     }
-    
-    func connectableDevice(_ device: ConnectableDevice!, capabilitiesAdded added: [Any]!, removed: [Any]!) { //기기의 기능이 추가되거나 제거되었을 때
-        print("Capabilities changed for \(device.friendlyName ?? "Unknown Device")")
-    }
+
     
     // DeviceServiceDelegate 매서드
     func deviceServiceConnectionRequired(_ service: DeviceService!) { // 서비스 연결 필요할 때
@@ -116,11 +135,6 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func deviceServiceConnectionSuccess(_ service: DeviceService!) {   //서비스에 성공적으로 연결되었을 때
         print("Connected to \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
     }
-    
-    func deviceService(_ service: DeviceService!, capabilitiesAdded added: [Any]!, removed: [Any]!) { //서비스의 기능이 추가되거나 제거되었을 때
-        print("Capabilities changed for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
-    }
-    
     func deviceService(_ service: DeviceService!, disconnectedWithError error: Error!) { //서비스 연결중 오류 발생 시
         if let error = error {
             print("Disconnected with error: \(error.localizedDescription)")
@@ -136,11 +150,6 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     //페어링 관련 매서드
     func deviceService(_ service: DeviceService!, pairingRequiredOf pairingType: DeviceServicePairingType, withData pairingData: Any!) { //서비스에 페어링이 필요할 때
         print("Pairing required for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
-        if pairingType == DeviceServicePairingTypePinCode {
-            //            DispatchQueue.main.async {
-            //                self.showPinCodeAlert(service: service)
-            //            }
-        }
     }
     func deviceServicePairingSuccess(_ service: DeviceService!) { //서비스 페어링 완료되었을때
         print("Pairing success for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
