@@ -19,31 +19,27 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         mDevice = device
         mDevice?.delegate = self
         
-                webOSService = device.services.first(where: { $0 is WebOSTVService }) as? WebOSTVService //services배열에서 WebOSTVService 타입의 첫번째 요소를 변수에 할당
-        //        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
-                mDevice?.setPairingType(DeviceServicePairingTypeNone)
+        //webOSService = device.services.first(where: { $0 is WebOSTVService }) as? WebOSTVService //services배열에서 WebOSTVService 타입의 첫번째 요소를 변수에 할당
+        //mDevice?.setPairingType(DeviceServicePairingTypePinCode)
+        mDevice?.setPairingType(DeviceServicePairingTypeNone)
         
-        
-//        guard mDevice?.setPairingType(DeviceServicePairingTypePinCode) != nil else { // setPairingType 설정이 성공하는지 확인
-//            print("setPairingType 설정 실패")
-//            return
-//        }
-        
-        mDevice?.connect()
+        mDevice?.service(withName: "webOS TV").connect()
         print("연결 성공")
+        print("connectedService : \(String(describing: mDevice?.connectedServiceNames()))")
     }
     
     
+    //기기 컨트롤 매서드
     func volumeUp(){
-        //        webOSService?.volumeUp()
+        //                webOSService?.volumeUp()
         mDevice?.volumeControl().volumeUp(success: { _ in
-            print("volume up")
+        print("volume up")
         }, failure: { error in
             print("volume up error \(String(describing: error))")
         })
     }
     func volumeDown(){
-        //        webOSService?.volumeDown()
+        //                webOSService?.volumeDown()
         mDevice?.volumeControl().volumeDown(success: { _ in
             print("volume Down")
         }, failure: { error in
@@ -57,30 +53,55 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
             print("click error \(String(describing: error))")
         })
     }
+    func mouseLeft(){
+        mDevice?.mouseControl().move(CGVector.init(dx: -10, dy: 0)
+                                     , success: { _ in print("move left success")}
+                                     , failure: { error in print("fail\(String(describing:error?.localizedDescription))")
+        })
+    }
+    func mouseRight(){
+        mDevice?.mouseControl().move(CGVector.init(dx: +10, dy: 0)
+                                     , success: { _ in print("move right success")}
+                                     , failure: { error in print("fail\(String(describing:error?.localizedDescription))")
+        })
+    }
     func keyHome(){
-        //        webOSService?.keyHome()
         mDevice?.keyControl().home(success: { _ in
             print("key Home")
         }, failure: { error in
             print("key home \(String(describing: error))")
         })
     }
-    func inputText(){
-        mDevice?.textInputControl().sendText("Hello", success: { _ in
-            print("send Text 성공")
+    func keyLeft(){
+        mDevice?.keyControl().left(success: { _ in
+            print("key left")
         }, failure: { error in
-            print("send Text \(String(describing: error))")
+            print("key left \(String(describing: error))")
         })
+    }
+    func keyRight(){
+        mDevice?.keyControl().right(success: { _ in
+            print("key right")
+        }, failure: { error in
+            print("key right \(String(describing: error))")
+        })
+    }
+    func inputText(){
+        mDevice?.textInputControl().sendText("h"
+                                             , success: { _ in print("success")}
+                                             , failure: {error in print("fail\(String(describing:error?.localizedDescription))")})
     }
     
     
     
     // ConnectableDeviceDelegate 매서드
     func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
-        print("Connected to \(device.friendlyName ?? "Unknown Device")")
+        print("Connected tooo: \(device.friendlyName ?? "Unknown Device")")
     }
     func connectableDeviceDisconnected(_ device: ConnectableDevice!, withError error: Error!) { //기기와 연결 끊어졌을 때
-        print("Disconnected from \(device.friendlyName ?? "Unknown Device"): \(error.localizedDescription)")
+        if let e = error {
+            print("Disconnected from \(device.friendlyName ?? "Unknown Device"): \(e.localizedDescription)")
+        }
     }
     
     func connectableDevice(_ device: ConnectableDevice!, capabilitiesAdded added: [Any]!, removed: [Any]!) { //기기의 기능이 추가되거나 제거되었을 때
@@ -128,27 +149,4 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         print("Pairing failed with error: \(error.localizedDescription)")
     }
     
-    
-    
-    //    private func showPinCodeAlert(service: DeviceService) {
-    //        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-    //              let window = windowScene.windows.first else {
-    //            return
-    //        }
-    //        let alertController = UIAlertController(title: "PIN Code Required", message: "Please enter the PIN code displayed on your TV.", preferredStyle: .alert)
-    //
-    //        alertController.addTextField { (textField) in
-    //            textField.placeholder = "PIN Code"
-    //            textField.keyboardType = .numberPad
-    //        }
-    //        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
-    //            if let pinCode = alertController.textFields?.first?.text {
-    //                service.pair(withData: pinCode)
-    //            }
-    //        }
-    //        alertController.addAction(confirmAction)
-    //        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-    //
-    //        window.rootViewController?.present(alertController, animated: true, completion: nil)
-    //    }
 }

@@ -9,31 +9,33 @@ import SwiftUI
 import ConnectSDK
 struct ConnectSdkView: View {
     @StateObject private var discoveryListener = DiscoveryListener()
+    //    @StateObject private var devicePicker = DevicePickerManager()
+    
     private var webOSTVService = WebOSTVService()
     
-    //    @StateObject private var devicePicker = DevicePickerManager()
+    //기본버튼
+    func basicBtn(text: String)-> some View {
+        Text(text)
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+    }
+    
     var body: some View {
+      
         VStack {
             HStack {
-                
                 Button(action: {
                     //                        devicePicker.startDiscovery()
                     discoveryListener.startScan()
                 }) {
-                    Text("Start Scan")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                    basicBtn(text: "Start Scan")
                 }
                 Button(action: {
                     discoveryListener.stopScan()
                 }) {
-                    Text("Stop Scan")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                    basicBtn(text: "Stop Scan")
                 }
             }
             
@@ -54,56 +56,65 @@ struct ConnectSdkView: View {
                 Button(action: {
                     webOSTVService.volumeUp()
                 }) {
-                    Text("VolumeUp")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                   basicBtn(text: "VolumeUp")
                 }
                 Button(action: {
                     webOSTVService.volumeDown()
                 }) {
-                    Text("VolumeDown")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                    basicBtn(text: "VolumeDown")
                 }
             }
             Spacer()
             
             HStack{
                 Button(action: {
-                    webOSTVService.keyHome()
-                }){
-                    Text("keyHome")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                Button(action: {
                     webOSTVService.mouseClick()
                 }){
-                    Text("Click")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                   basicBtn(text: "Click")
                 }
+                Button(action: {
+                    webOSTVService.mouseLeft()
+                }){
+                    basicBtn(text: "←M")
+                }
+                Button(action: {
+                    webOSTVService.mouseRight()
+                }){
+                    basicBtn(text: "M→")
+                }
+            }
+            
+            HStack{
+                Button(action: {
+                    webOSTVService.keyHome()
+                }){
+                    basicBtn(text: "keyHome")
+                }
+                Button(action: {
+                    webOSTVService.keyLeft()
+                }){
+                    basicBtn(text: "←Key")
+                }
+                Button(action: {
+                    webOSTVService.keyRight()
+                }){
+                    basicBtn(text: "Key→")
+                }
+            }
+            
+            HStack{
                 Button(action: {
                     webOSTVService.inputText()
                 }){
-                    Text("✋")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                   basicBtn(text: "H")
                 }
             }
         }
         .navigationTitle("ConnectSDK View")
     }
+    
+    
+   
 }
 #Preview {
     ConnectSdkView()
