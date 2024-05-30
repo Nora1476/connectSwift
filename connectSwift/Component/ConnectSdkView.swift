@@ -12,7 +12,7 @@ struct ConnectSdkView: View {
     @StateObject private var webOSTVService = WebOSTVService()
     
     
-    //기본버튼
+    //기본버튼 디자인
     func basicBtn(text: String)-> some View {
         Text(text)
             .padding()

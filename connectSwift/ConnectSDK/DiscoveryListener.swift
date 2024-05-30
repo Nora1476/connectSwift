@@ -11,12 +11,13 @@ import CoreLocation
 import SwiftUI
 
 class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, CLLocationManagerDelegate {
-    private weak var discoveryManager: DiscoveryManager?
+    private var discoveryManager: DiscoveryManager?
     private var locationManager: CLLocationManager!
     
     @Published var webOSTVService = WebOSTVService()
     @Published var devices: [ConnectableDevice] = []
     @Published var deviceCount: Int = 0
+    private var isScanning: Bool = false
 
     override init() {
         super.init()
@@ -45,17 +46,22 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
         discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         discoveryManager?.delegate = self
 
-        print("initialize")
+        print("discoveryManager 초기화")
     }
     
     func startScan() {
+        guard !isScanning else { return }
+        isScanning = true
+        
         devices.removeAll()
+        discoveryManager?.stopDiscovery()
         discoveryManager?.startDiscovery()
         print("디바이스 스캔 시작")
     }
     
     func stopScan() {
         discoveryManager?.stopDiscovery()
+        isScanning = false
         print("디바이스 스캔 중지")
     }
 
@@ -74,14 +80,13 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     // DiscoveryManagerDelegate methods
     func discoveryManager(_ manager: DiscoveryManager!, didFind device: ConnectableDevice!) {
         DispatchQueue.main.async {
-            guard !self.devices.contains(device) else { return }
+            guard !self.devices.contains(device) else { return }//중복방지
             print("onDeviceAdded: \(String(describing: device.friendlyName))")
             self.devices.append(device)
             self.deviceCount = self.devices.count
             print("현재 디바이스 수: \(self.deviceCount)")
         }
     }
-
     func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
         DispatchQueue.main.async {
             print("onDeviceUpdated: \(String(describing: device.friendlyName)) \(String(describing: device.services))")
@@ -90,7 +95,6 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
             }
         }
     }
-
     func discoveryManager(_ manager: DiscoveryManager!, didLose device: ConnectableDevice!) {
         DispatchQueue.main.async {
             print("onDeviceRemoved: \(String(describing: device.friendlyName))")
@@ -99,10 +103,10 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
             print("현재 디바이스 수: \(self.deviceCount)")
         }
     }
-
     func discoveryManager(_ manager: DiscoveryManager!, discoveryFailed error: Error!) {
         DispatchQueue.main.async {
             print("onDiscoveryFailed: \(String(describing: error))")
+            self.isScanning = false // 스캔 실패 시
         }
     }
 }
