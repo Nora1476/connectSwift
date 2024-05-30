@@ -48,7 +48,7 @@ struct ConnectSdkView: View {
                     Button(action: {
                         if webOSTVService.isConnected{
                             webOSTVService.disConnect()
-                            discoveryListener.devices.removeAll() //연결가능 기기 리스트 초기화
+                            discoveryListener.disconnectFromDevice(device)
                         } else{
                             webOSTVService.initialize(device: device)
                         }

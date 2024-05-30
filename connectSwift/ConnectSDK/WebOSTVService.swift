@@ -20,7 +20,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
-        deviceService?.delegate = self
+
         
 //        webOSService = mDevice?.service(withName: "WebOSWervice") as? WebOSTVService
         mDevice?.setPairingType(DeviceServicePairingTypePinCode)
@@ -39,6 +39,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func disConnect(){
         mDevice?.disconnect()
         deviceService?.disconnect()
+        
         
         DispatchQueue.main.async{
             self.isConnected = false

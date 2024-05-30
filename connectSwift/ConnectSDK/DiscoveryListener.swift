@@ -11,7 +11,7 @@ import CoreLocation
 import SwiftUI
 
 class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, CLLocationManagerDelegate {
-    private var discoveryManager: DiscoveryManager?
+    private weak var discoveryManager: DiscoveryManager?
     private var locationManager: CLLocationManager!
     
     @Published var webOSTVService = WebOSTVService()
@@ -38,7 +38,6 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
         }
     }
 
-
     func initialize() {
         setupLocationManager()
         
@@ -63,36 +62,47 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     func connectToDevice(_ device: ConnectableDevice) {
         webOSTVService.initialize(device: device)
     }
-
     
+    func disconnectFromDevice(_ device: ConnectableDevice) {
+        device.disconnect()
+        devices.removeAll { $0 == device }
+        deviceCount = devices.count
+        print("디바이스 연결 해제: \(String(describing: device.friendlyName))")
+        print("현재 디바이스 수: \(deviceCount)")
+    }
+
     // DiscoveryManagerDelegate methods
     func discoveryManager(_ manager: DiscoveryManager!, didFind device: ConnectableDevice!) {
-//        DispatchQueue.main.async {
-//        }
+        DispatchQueue.main.async {
+            guard !self.devices.contains(device) else { return }
             print("onDeviceAdded: \(String(describing: device.friendlyName))")
             self.devices.append(device)
             self.deviceCount = self.devices.count
             print("현재 디바이스 수: \(self.deviceCount)")
+        }
     }
 
     func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
-        print("onDeviceUpdated: \(String(describing: device.friendlyName))\(String(describing: device.services)) ")
-        if let index = devices.firstIndex(of: device) {
-            devices[index] = device
+        DispatchQueue.main.async {
+            print("onDeviceUpdated: \(String(describing: device.friendlyName)) \(String(describing: device.services))")
+            if let index = self.devices.firstIndex(of: device) {
+                self.devices[index] = device
+            }
         }
     }
 
     func discoveryManager(_ manager: DiscoveryManager!, didLose device: ConnectableDevice!) {
-        print("onDeviceRemoved: \(String(describing: device.friendlyName))")
-        devices.removeAll { $0 == device }
-        deviceCount = devices.count
-        print("현재 디바이스 수: \(deviceCount)")
+        DispatchQueue.main.async {
+            print("onDeviceRemoved: \(String(describing: device.friendlyName))")
+            self.devices.removeAll { $0 == device }
+            self.deviceCount = self.devices.count
+            print("현재 디바이스 수: \(self.deviceCount)")
+        }
     }
 
     func discoveryManager(_ manager: DiscoveryManager!, discoveryFailed error: Error!) {
-        print("onDiscoveryFailed: \(String(describing: error))")
+        DispatchQueue.main.async {
+            print("onDiscoveryFailed: \(String(describing: error))")
+        }
     }
-    
-    
-    
 }
