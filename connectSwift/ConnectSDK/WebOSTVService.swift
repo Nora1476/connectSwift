@@ -12,23 +12,22 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     
     private var mDevice: ConnectableDevice?
     private var deviceService: DeviceService?
-    private var webOSService : WebOSTVService?
-   
     
     @Published var isConnected: Bool = false //연결상태
     
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
+        deviceService?.delegate = self
 
+//        deviceService = mDevice?.service(withName: "webOS TV")
+//        deviceService?.pair(withData: DeviceServicePairingTypePinCode)
         
-//        webOSService = mDevice?.service(withName: "WebOSWervice") as? WebOSTVService
-        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
+        deviceService?.connect()
         
-        mDevice?.connect()
         DispatchQueue.main.async {
             self.isConnected = true
-            print(self.isConnected)
+            print("isConnected : \(self.isConnected)")
         }
         
         print("연결 시도")
@@ -36,14 +35,12 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         print("requiresPairing : \(String(describing: deviceService?.requiresPairing))")
     }
     
-    func disConnect(){
-        mDevice?.disconnect()
-        deviceService?.disconnect()
-        
-        
+    func disConnect(_ deviceService: ConnectableDevice){
+//        deviceService.service(withName: "webOS TV").disconnect()
+        deviceService.disconnect()
+           
         DispatchQueue.main.async{
             self.isConnected = false
-            
         }
     }
     
@@ -114,12 +111,20 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     // ConnectableDeviceDelegate 매서드
     func connectableDeviceConnectionRequired(_ device: ConnectableDevice!, for service: DeviceService!) {
         print("ServiceID \(String(describing: service.serviceDescription.serviceId))")
+        
+        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
+        deviceService = mDevice?.service(withName: "webOS TV")
+        
+        
+    }
+    func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
+        print("Connected to device: \(device.friendlyName ?? "Unknown Device")")
     }
     func connectableDevice(_ device: ConnectableDevice!, service: DeviceService!, pairingRequiredOfType pairingType: Int32, withData pairingData: Any!) {
         print("ServiceID: \(device.friendlyName ?? "Unknown Device")")
     }
-    func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
-        print("Connected tooo: \(device.friendlyName ?? "Unknown Device")")
+    func connectableDevicePairingSuccess(_ device: ConnectableDevice!, service: DeviceService!) {
+        print("pairingType:\(String(describing:deviceService?.pairingType))")
     }
     func connectableDeviceDisconnected(_ device: ConnectableDevice!, withError error: Error!) { //기기와 연결 끊어졌을 때
         if let e = error {
@@ -132,15 +137,14 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func deviceServiceConnectionRequired(_ service: DeviceService!) { // 서비스 연결 필요할 때
         print("Connection required for service: \(service.serviceDescription?.serviceId ?? "Unknown Service ID")")
     }
-    
     func deviceServiceConnectionSuccess(_ service: DeviceService!) {   //서비스에 성공적으로 연결되었을 때
-        print("Connected to \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
+        print("Connected to service \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
     }
     func deviceService(_ service: DeviceService!, disconnectedWithError error: Error!) { //서비스 연결중 오류 발생 시
         if let error = error {
             print("Disconnected with error: \(error.localizedDescription)")
         } else {
-            print("Disconnected")
+            print("Disconnected Service")
         }
     }
     func deviceService(_ service: DeviceService!, didFailConnectWithError error: Error!) { //서비스 연결 시도가 실패했을 때
@@ -151,12 +155,13 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     //페어링 관련 매서드
     func deviceService(_ service: DeviceService!, pairingRequiredOf pairingType: DeviceServicePairingType, withData pairingData: Any!) { //서비스에 페어링이 필요할 때
         print("Pairing required for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
+//        deviceService?.pair(withData: pairingData)
     }
     func deviceServicePairingSuccess(_ service: DeviceService!) { //서비스 페어링 완료되었을때
         print("Pairing success for service: \(service.serviceDescription?.friendlyName ?? "Unknown Device")")
     }
     func deviceService(_ service: DeviceService!, pairingFailedWithError error: Error!) { //페어링 실패했을때
-        print("Pairing failed with error: \(error.localizedDescription)")
+        print("Pairing service failed with error: \(error.localizedDescription)")
     }
     
 }

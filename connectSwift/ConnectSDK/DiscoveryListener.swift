@@ -17,10 +17,11 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     @Published var webOSTVService = WebOSTVService()
     @Published var devices: [ConnectableDevice] = []
     @Published var deviceCount: Int = 0
-    private var isScanning: Bool = false
+    @Published var isScanning: Bool = false
 
     override init() {
         super.init()
+        setupLocationManager()
         initialize()
     }
     
@@ -40,8 +41,6 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     }
 
     func initialize() {
-        setupLocationManager()
-        
         discoveryManager = DiscoveryManager.shared()
         discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         discoveryManager?.delegate = self
@@ -51,30 +50,36 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     
     func startScan() {
         guard !isScanning else { return }
-        isScanning = true
+        self.isScanning = true
         
-        devices.removeAll()
         discoveryManager?.stopDiscovery()
         discoveryManager?.startDiscovery()
         print("디바이스 스캔 시작")
+        
+        DispatchQueue.main.async{
+            self.devices.removeAll()
+        }
     }
     
     func stopScan() {
         discoveryManager?.stopDiscovery()
-        isScanning = false
+        self.isScanning = false
+        
         print("디바이스 스캔 중지")
     }
 
     func connectToDevice(_ device: ConnectableDevice) {
+        stopScan()
         webOSTVService.initialize(device: device)
     }
     
     func disconnectFromDevice(_ device: ConnectableDevice) {
-        device.disconnect()
-        devices.removeAll { $0 == device }
-        deviceCount = devices.count
-        print("디바이스 연결 해제: \(String(describing: device.friendlyName))")
-        print("현재 디바이스 수: \(deviceCount)")
+        DispatchQueue.main.async {
+            self.devices.removeAll { $0 == device }
+            self.deviceCount = self.devices.count
+            print("디바이스 연결 해제: \(String(describing: device.friendlyName))")
+            print("현재 디바이스 수: \(self.deviceCount)")
+        }
     }
 
     // DiscoveryManagerDelegate methods

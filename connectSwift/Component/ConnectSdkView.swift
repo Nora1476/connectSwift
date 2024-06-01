@@ -22,11 +22,10 @@ struct ConnectSdkView: View {
     }
     
     var body: some View {
-      
+        
         VStack {
             HStack {
                 Button(action: {
-                    //                        devicePicker.startDiscovery()
                     discoveryListener.startScan()
                 }) {
                     basicBtn(text: "Start Scan")
@@ -40,19 +39,17 @@ struct ConnectSdkView: View {
             
             Spacer(minLength: 20)
             
-//            Text("Discovered Devices: \(discoveryListener.deviceCount)")
             List(discoveryListener.devices, id: \.self) { device in
-                HStack{
+                HStack {
                     Text(device.friendlyName ?? "Unknown Device")
                     Spacer()
                     Button(action: {
-                        if webOSTVService.isConnected{
-                            webOSTVService.disConnect()
-                            discoveryListener.disconnectFromDevice(device)
-                        } else{
+                        if webOSTVService.isConnected {
+                            webOSTVService.disConnect(device)
+                        } else {
                             webOSTVService.initialize(device: device)
                         }
-                    }){
+                    }) {
                         Text(webOSTVService.isConnected ? "Disconnect" : "Connect")
                             .foregroundColor(.blue)
                     }
@@ -66,7 +63,7 @@ struct ConnectSdkView: View {
                 Button(action: {
                     webOSTVService.volumeUp()
                 }) {
-                   basicBtn(text: "VolumeUp")
+                    basicBtn(text: "VolumeUp")
                 }
                 Button(action: {
                     webOSTVService.volumeDown()
@@ -80,7 +77,7 @@ struct ConnectSdkView: View {
                 Button(action: {
                     webOSTVService.mouseClick()
                 }){
-                   basicBtn(text: "Click")
+                    basicBtn(text: "Click")
                 }
                 Button(action: {
                     webOSTVService.mouseLeft()
@@ -116,7 +113,7 @@ struct ConnectSdkView: View {
                 Button(action: {
                     webOSTVService.inputText()
                 }){
-                   basicBtn(text: "H")
+                    basicBtn(text: "H")
                 }
             }
         }
@@ -124,7 +121,7 @@ struct ConnectSdkView: View {
     }
     
     
-   
+    
 }
 #Preview {
     ConnectSdkView()
