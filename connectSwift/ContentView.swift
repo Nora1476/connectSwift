@@ -9,6 +9,15 @@ import SwiftUI
 import ConnectSDK
 
 struct ContentView: View {
+    //메인화면 버튼
+    func mainBtn(text: String)-> some View {
+        Text(text)
+            .font(.callout)
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+    }
    var body: some View {
         NavigationView {
             VStack(alignment:.leading) {
@@ -18,30 +27,15 @@ struct ContentView: View {
                     .padding(.bottom, 20)
                 HStack {
                     NavigationLink(destination: ConnectSdkView()) {
-                        Text("ConnectSDK")
-                            .font(.callout)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        mainBtn(text: "ConnectSDK")
                     }
                 }
                 HStack{
                     NavigationLink(destination: BluetoothBle()) {
-                        Text("BluetoothBLE")
-                            .font(.callout)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        mainBtn(text: "BluetoothBLE")
                     }
                     NavigationLink(destination: BluetoothHid()){
-                        Text("BluetoothHID")
-                            .font(.callout)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        mainBtn(text: "BluetoothHID")
                     }
                 }
                 Spacer()
