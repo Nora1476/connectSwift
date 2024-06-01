@@ -98,6 +98,7 @@ struct ConnectSdkView: View {
 //                    basicBtn(text: "Key→")
 //                }
 //            }
+            
         }
         .navigationTitle("ConnectSDK View")
     }

@@ -9,21 +9,23 @@ import ConnectSDK
 import CoreLocation
 import SwiftUI
 
-class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate, DevicePickerDelegate, DiscoveryManagerDelegate {
+class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate, DevicePickerDelegate, DiscoveryManagerDelegate, ConnectableDeviceDelegate {
     
+    private var discoveryManager: DiscoveryManager?
     private var locationManager: CLLocationManager!
  
     @Published var devices: [ConnectableDevice] = []
     @Published var selectedDevice: ConnectableDevice?
-    @Published var showPicker: Bool = false
 //    @Published var webOSTVService = WebOSTVService()
 
     
     override init() {
         super.init()
         setupLocationManager()
-        DiscoveryManager.shared().delegate = self
-        DiscoveryManager.shared().startDiscovery()
+        
+        discoveryManager = DiscoveryManager.shared()
+        discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
+        discoveryManager?.delegate = self
     }
     
     private func setupLocationManager() {
@@ -42,34 +44,20 @@ class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate
     }
     
     func showDevicePicker() {
+        discoveryManager?.stopDiscovery()
+        discoveryManager?.startDiscovery()
+        
         print("Device Picker")
-        DispatchQueue.main.async {
-            self.showPicker = true
-        }
     }
     
-    
-    //기기 컨트롤
-    func volumeUp(){
-        selectedDevice?.volumeControl().volumeUp(success: { _ in
-        }, failure: { error in
-            print("volume up error \(String(describing: error))")
-        })
-    }
-    func volumeDown(){
-        selectedDevice?.volumeControl().volumeDown(success: { _ in
-            print("volume Down")
-        }, failure: { error in
-            print("volume Down error \(String(describing: error))")
-        })
-    }
-    
+
     
     //DevicePicker 동작
     func devicePicker(_ picker: DevicePicker!, didSelect device: ConnectableDevice!) {
-        device.setPairingType(DeviceServicePairingTypePinCode)
-        device.connect()
-        self.showPicker = false
+        selectedDevice = device
+        selectedDevice?.delegate = self
+        selectedDevice?.setPairingType(DeviceServicePairingTypePinCode)
+        selectedDevice?.connect()
         
         print("연결 시도")
     }
@@ -112,5 +100,35 @@ class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate
            }
        }
        
+    
+    
+    
+    
+    //기기 컨트롤
+    func volumeUp() {
+           guard let device = selectedDevice else {
+               print("No device selected")
+               return
+           }
+           
+           guard let volumeControl = device.volumeControl() else {
+               print("No volume control available on the selected device")
+               return
+           }
+           
+           volumeControl.volumeUp(success: { _ in
+               print("Volume up successful")
+           }, failure: { error in
+               print("Volume up error: \(String(describing: error))")
+           })
+       }
+    func volumeDown(){
+        selectedDevice?.volumeControl().volumeDown(success: { _ in
+            print("volume Down")
+        }, failure: { error in
+            print("volume Down error \(String(describing: error))")
+        })
+    }
+    
 
 }
