@@ -8,9 +8,8 @@
 import SwiftUI
 import ConnectSDK
 struct ConnectSdkView: View {
-    @StateObject private var discoveryListener = DiscoveryListener()
+    @StateObject var devicePickerManager = DevicePickerManager()
     @StateObject private var webOSTVService = WebOSTVService()
-    
     
     //기본버튼 디자인
     func basicBtn(text: String)-> some View {
@@ -26,38 +25,29 @@ struct ConnectSdkView: View {
         VStack {
             HStack {
                 Button(action: {
-                    discoveryListener.startScan()
+                    devicePickerManager.showDevicePicker()
                 }) {
                     basicBtn(text: "Start Scan")
                 }
                 Button(action: {
-                    discoveryListener.stopScan()
                 }) {
                     basicBtn(text: "Stop Scan")
                 }
             }
             
-            Spacer(minLength: 20)
-            
-            List(discoveryListener.devices, id: \.self) { device in
-                HStack {
+            List(devicePickerManager.devices, id: \.id) { device in
+                VStack(alignment: .leading) {
                     Text(device.friendlyName ?? "Unknown Device")
-                    Spacer()
-                    Button(action: {
-                        if webOSTVService.isConnected {
-                            webOSTVService.disConnect(device)
-                        } else {
-                            webOSTVService.initialize(device: device)
-                        }
-                    }) {
-                        Text(webOSTVService.isConnected ? "Disconnect" : "Connect")
-                            .foregroundColor(.blue)
-                    }
+                        .font(.headline)
+                    Text(device.modelName ?? "Unknown Model")
+                        .font(.subheadline)
+                }
+                .onTapGesture {
+                    devicePickerManager.devicePicker(nil, didSelect: device)
                 }
             }
-            if discoveryListener.deviceCount == 0 {
-                Text("No devices found")
-            }
+            Spacer()
+            
             
             HStack{
                 Button(action: {

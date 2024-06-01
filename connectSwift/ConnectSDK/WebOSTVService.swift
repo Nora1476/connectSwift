@@ -20,8 +20,8 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
         mDevice?.delegate = self
         deviceService?.delegate = self
 
-//        deviceService = mDevice?.service(withName: "webOS TV")
-//        deviceService?.pair(withData: DeviceServicePairingTypePinCode)
+        deviceService = mDevice?.service(withName: "webOS TV")
+        deviceService?.pair(withData: DeviceServicePairingTypePinCode)
         
         deviceService?.connect()
         
@@ -110,11 +110,7 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     
     // ConnectableDeviceDelegate 매서드
     func connectableDeviceConnectionRequired(_ device: ConnectableDevice!, for service: DeviceService!) {
-        print("ServiceID \(String(describing: service.serviceDescription.serviceId))")
-        
-        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
-        deviceService = mDevice?.service(withName: "webOS TV")
-        
+        print("ServiceID ------- \(String(describing: service.serviceDescription.serviceId))")
         
     }
     func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
