@@ -9,7 +9,7 @@ import SwiftUI
 import ConnectSDK
 struct ConnectSdkView: View {
     @StateObject var devicePickerManager = DevicePickerManager()
-    @StateObject private var webOSTVService = WebOSTVService()
+ 
     
     //기본버튼 디자인
     func basicBtn(text: String)-> some View {
@@ -51,53 +51,53 @@ struct ConnectSdkView: View {
             
             HStack{
                 Button(action: {
-                    webOSTVService.volumeUp()
+                    devicePickerManager.volumeUp()
                 }) {
                     basicBtn(text: "VolumeUp")
                 }
                 Button(action: {
-                    webOSTVService.volumeDown()
+                    devicePickerManager.volumeDown()
                 }) {
                     basicBtn(text: "VolumeDown")
                 }
             }
             Spacer()
             
-            HStack{
-                Button(action: {
-                    webOSTVService.mouseClick()
-                }){
-                    basicBtn(text: "Click")
-                }
-                Button(action: {
-                    webOSTVService.mouseLeft()
-                }){
-                    basicBtn(text: "←M")
-                }
-                Button(action: {
-                    webOSTVService.mouseRight()
-                }){
-                    basicBtn(text: "M→")
-                }
-            }
-            
-            HStack{
-                Button(action: {
-                    webOSTVService.keyHome()
-                }){
-                    basicBtn(text: "keyHome")
-                }
-                Button(action: {
-                    webOSTVService.keyLeft()
-                }){
-                    basicBtn(text: "←Key")
-                }
-                Button(action: {
-                    webOSTVService.keyRight()
-                }){
-                    basicBtn(text: "Key→")
-                }
-            }
+//            HStack{
+//                Button(action: {
+//                    webOSTVService.mouseClick()
+//                }){
+//                    basicBtn(text: "Click")
+//                }
+//                Button(action: {
+//                    webOSTVService.mouseLeft()
+//                }){
+//                    basicBtn(text: "←M")
+//                }
+//                Button(action: {
+//                    webOSTVService.mouseRight()
+//                }){
+//                    basicBtn(text: "M→")
+//                }
+//            }
+//            
+//            HStack{
+//                Button(action: {
+//                    webOSTVService.keyHome()
+//                }){
+//                    basicBtn(text: "keyHome")
+//                }
+//                Button(action: {
+//                    webOSTVService.keyLeft()
+//                }){
+//                    basicBtn(text: "←Key")
+//                }
+//                Button(action: {
+//                    webOSTVService.keyRight()
+//                }){
+//                    basicBtn(text: "Key→")
+//                }
+//            }
         }
         .navigationTitle("ConnectSDK View")
     }

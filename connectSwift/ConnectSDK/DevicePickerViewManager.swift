@@ -16,7 +16,7 @@ class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate
     @Published var devices: [ConnectableDevice] = []
     @Published var selectedDevice: ConnectableDevice?
     @Published var showPicker: Bool = false
-    @Published var webOSTVService = WebOSTVService()
+//    @Published var webOSTVService = WebOSTVService()
 
     
     override init() {
@@ -48,12 +48,30 @@ class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate
         }
     }
     
+    
+    //기기 컨트롤
+    func volumeUp(){
+        selectedDevice?.volumeControl().volumeUp(success: { _ in
+        }, failure: { error in
+            print("volume up error \(String(describing: error))")
+        })
+    }
+    func volumeDown(){
+        selectedDevice?.volumeControl().volumeDown(success: { _ in
+            print("volume Down")
+        }, failure: { error in
+            print("volume Down error \(String(describing: error))")
+        })
+    }
+    
+    
     //DevicePicker 동작
     func devicePicker(_ picker: DevicePicker!, didSelect device: ConnectableDevice!) {
-//        device.setPairingType(DeviceServicePairingTypePinCode)
-//        device.connect()
-        webOSTVService.initialize(device: device)
+        device.setPairingType(DeviceServicePairingTypePinCode)
+        device.connect()
         self.showPicker = false
+        
+        print("연결 시도")
     }
     
     
@@ -83,11 +101,9 @@ class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate
        func connectableDeviceReady(_ device: ConnectableDevice!) {
            print("Device is ready: \(device.friendlyName ?? "Unknown")")
        }
-       
        func connectableDeviceDisconnected(_ device: ConnectableDevice!, withError error: Error!) {
            print("Device disconnected: \(device.friendlyName ?? "Unknown"), error: \(error?.localizedDescription ?? "No error")")
        }
-       
        func connectableDevice(_ device: ConnectableDevice!, pairingRequiredOfType pairingType: DeviceServicePairingType, withData pairingData: [AnyHashable : Any]!) {
            if pairingType == DeviceServicePairingTypePinCode {
                DispatchQueue.main.async {

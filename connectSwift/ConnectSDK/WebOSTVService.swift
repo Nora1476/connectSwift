@@ -10,16 +10,15 @@ import ConnectSDK
 
 class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, DeviceServiceDelegate {
     
-    private var mDevice: ConnectableDevice?
-    private var deviceService: DeviceService?
-    
+    @Published private var mDevice: ConnectableDevice?
+    @Published private var deviceService: DeviceService?
     @Published var isConnected: Bool = false //연결상태
     
     func initialize(device: ConnectableDevice) {
         mDevice = device
         mDevice?.delegate = self
+        
         deviceService?.delegate = self
-
         deviceService = mDevice?.service(withName: "webOS TV")
         deviceService?.pair(withData: DeviceServicePairingTypePinCode)
         
