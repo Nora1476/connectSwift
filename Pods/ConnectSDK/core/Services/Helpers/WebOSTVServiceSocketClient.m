@@ -292,7 +292,7 @@
         if (pairingString) {
             self.service.pairingType = [self pairingStringToType:pairingString];
             // TODO: Need to update the method name socketWillRegister to socketWillRequirePairingWithPairingType.
-            if (self.delegate && [self.delegate respondsToSelector:@selector(socketWillRegister:)] && self.service.pairingType > DeviceServicePairingTypeFirstScreen){
+            if (self.delegate && [self.delegate respondsToSelector:@selector(socketWillRegister:)] && self.service.pairingType != DeviceServicePairingTypeNone){
                 [self.delegate socketWillRegister:self];
             }
         }
@@ -491,11 +491,7 @@
         if (comId && connectionCommand.callbackError)
         {
             NSError *err = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:decodeData];
-            dispatch_on_main(^{ connectionCommand.callbackError(err);
-                //'아니오' 선택했을 때 뒤로가기
-                if (self.delegate)
-                    [self.delegate closeByResponse:err];
-            });
+            dispatch_on_main(^{ connectionCommand.callbackError(err); });
         }
     } else
     {

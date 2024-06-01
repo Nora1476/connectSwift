@@ -17,9 +17,11 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     @Published var webOSTVService = WebOSTVService()
     @Published var devices: [ConnectableDevice] = []
     @Published var deviceCount: Int = 0
+    @Published var isScanning: Bool = false
 
     override init() {
         super.init()
+        setupLocationManager()
         initialize()
     }
     
@@ -38,68 +40,78 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
         }
     }
 
-
     func initialize() {
-        setupLocationManager()
-        
         discoveryManager = DiscoveryManager.shared()
         discoveryManager?.pairingLevel = DeviceServicePairingLevelOn
         discoveryManager?.delegate = self
-//        discoveryManager?.startDiscovery()
-//        discoveryManager?.capabilityFilters = [
-//            kVolumeControlVolumeUpDown
-//        ]
-        print("initialize")
+
+        print("discoveryManager 초기화")
     }
     
     func startScan() {
-        devices.removeAll()
-        deviceCount = 0
+        guard !isScanning else { return }
+        self.isScanning = true
+        
+        discoveryManager?.stopDiscovery()
         discoveryManager?.startDiscovery()
         print("디바이스 스캔 시작")
+        
+        DispatchQueue.main.async{
+            self.devices.removeAll()
+        }
     }
     
     func stopScan() {
         discoveryManager?.stopDiscovery()
+        self.isScanning = false
+        
         print("디바이스 스캔 중지")
     }
 
     func connectToDevice(_ device: ConnectableDevice) {
+        stopScan()
         webOSTVService.initialize(device: device)
     }
-
     
+    func disconnectFromDevice(_ device: ConnectableDevice) {
+        DispatchQueue.main.async {
+            self.devices.removeAll { $0 == device }
+            self.deviceCount = self.devices.count
+            print("디바이스 연결 해제: \(String(describing: device.friendlyName))")
+            print("현재 디바이스 수: \(self.deviceCount)")
+        }
+    }
+
     // DiscoveryManagerDelegate methods
     func discoveryManager(_ manager: DiscoveryManager!, didFind device: ConnectableDevice!) {
-//        DispatchQueue.main.async {
-//        }
+        DispatchQueue.main.async {
+            guard !self.devices.contains(device) else { return }//중복방지
             print("onDeviceAdded: \(String(describing: device.friendlyName))")
             self.devices.append(device)
             self.deviceCount = self.devices.count
             print("현재 디바이스 수: \(self.deviceCount)")
-//            if(self.devices.count != 0) {
-//                self.discoveryManager?.stopDiscovery()
-//            }
-    }
-
-    func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
-        print("onDeviceUpdated: \(String(describing: device.friendlyName))\(String(describing: device.services)) ")
-        if let index = devices.firstIndex(of: device) {
-            devices[index] = device
         }
     }
-
+    func discoveryManager(_ manager: DiscoveryManager!, didUpdate device: ConnectableDevice!) {
+        DispatchQueue.main.async {
+            print("onDeviceUpdated: \(String(describing: device.friendlyName)) \(String(describing: device.services))")
+            if let index = self.devices.firstIndex(of: device) {
+                self.devices[index] = device
+            }
+        }
+    }
     func discoveryManager(_ manager: DiscoveryManager!, didLose device: ConnectableDevice!) {
-        print("onDeviceRemoved: \(String(describing: device.friendlyName))")
-        devices.removeAll { $0 == device }
-        deviceCount = devices.count
-        print("현재 디바이스 수: \(deviceCount)")
+        DispatchQueue.main.async {
+            print("onDeviceRemoved: \(String(describing: device.friendlyName))")
+            self.devices.removeAll { $0 == device }
+            self.deviceCount = self.devices.count
+            print("현재 디바이스 수: \(self.deviceCount)")
+        }
     }
-
     func discoveryManager(_ manager: DiscoveryManager!, discoveryFailed error: Error!) {
-        print("onDiscoveryFailed: \(String(describing: error))")
+        DispatchQueue.main.async {
+            print("onDiscoveryFailed: \(String(describing: error))")
+            self.isScanning = false // 스캔 실패 시
+        }
     }
-    
-    
-    
 }
