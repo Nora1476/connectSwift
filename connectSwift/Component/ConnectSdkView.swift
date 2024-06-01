@@ -108,14 +108,6 @@ struct ConnectSdkView: View {
                     basicBtn(text: "Key→")
                 }
             }
-            
-            HStack{
-                Button(action: {
-                    webOSTVService.inputText()
-                }){
-                    basicBtn(text: "H")
-                }
-            }
         }
         .navigationTitle("ConnectSDK View")
     }
