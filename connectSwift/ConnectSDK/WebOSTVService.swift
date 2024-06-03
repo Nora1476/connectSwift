@@ -112,10 +112,8 @@ class WebOSTVService: NSObject, ObservableObject, ConnectableDeviceDelegate, Dev
     func connectableDeviceConnectionRequired(_ device: ConnectableDevice!, for service: DeviceService!) {
         print("ServiceID \(String(describing: service.serviceDescription.serviceId))")
         
-        mDevice?.setPairingType(DeviceServicePairingTypePinCode)
+        mDevice?.setPairingType(DeviceServicePairingTypeNone)
         deviceService = mDevice?.service(withName: "webOS TV")
-        
-        
     }
     func connectableDeviceReady(_ device: ConnectableDevice!) { //기기 연결 준비되었을 때
         print("Connected to device: \(device.friendlyName ?? "Unknown Device")")

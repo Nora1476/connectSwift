@@ -48,6 +48,7 @@ struct ConnectSdkView: View {
                             webOSTVService.disConnect(device)
                         } else {
                             webOSTVService.initialize(device: device)
+                            discoveryListener.disconnectFromDevice(device)
                         }
                     }) {
                         Text(webOSTVService.isConnected ? "Disconnect" : "Connect")
