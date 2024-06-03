@@ -75,7 +75,7 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     
     func disconnectFromDevice(_ device: ConnectableDevice) {
         DispatchQueue.main.async {
-            self.devices.removeAll { $0 == device }
+//            self.devices.removeAll { $0 == device }
             self.deviceCount = self.devices.count
             self.discoveryManager?.deviceStore.removeAll()
             print("disconnectFromDevice 디바이스 연결 해제: \(String(describing: device.friendlyName))")
