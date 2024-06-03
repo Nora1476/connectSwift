@@ -56,6 +56,7 @@ class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate
     func devicePicker(_ picker: DevicePicker!, didSelect device: ConnectableDevice!) {
         selectedDevice = device
         selectedDevice?.delegate = self
+        
         selectedDevice?.setPairingType(DeviceServicePairingTypePinCode)
         selectedDevice?.connect()
         
@@ -127,6 +128,20 @@ class DevicePickerManager: NSObject, ObservableObject, CLLocationManagerDelegate
             print("volume Down")
         }, failure: { error in
             print("volume Down error \(String(describing: error))")
+        })
+    }
+    func mouseClick(){
+        selectedDevice?.mouseControl().click(success: { _ in
+            print("click success")
+        }, failure: { error in
+            print("click error \(String(describing: error))")
+        })
+    }
+    func keyHome(){
+        selectedDevice?.keyControl().home(success: { _ in
+            print("key Home")
+        }, failure: { error in
+            print("key home \(String(describing: error))")
         })
     }
     

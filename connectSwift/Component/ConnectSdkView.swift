@@ -61,14 +61,13 @@ struct ConnectSdkView: View {
                     basicBtn(text: "VolumeDown")
                 }
             }
-            Spacer()
             
-//            HStack{
-//                Button(action: {
-//                    webOSTVService.mouseClick()
-//                }){
-//                    basicBtn(text: "Click")
-//                }
+            HStack{
+                Button(action: {
+                    devicePickerManager.mouseClick()
+                }){
+                    basicBtn(text: "Click")
+                }
 //                Button(action: {
 //                    webOSTVService.mouseLeft()
 //                }){
@@ -79,14 +78,14 @@ struct ConnectSdkView: View {
 //                }){
 //                    basicBtn(text: "M→")
 //                }
-//            }
-//            
-//            HStack{
-//                Button(action: {
-//                    webOSTVService.keyHome()
-//                }){
-//                    basicBtn(text: "keyHome")
-//                }
+            }
+            
+            HStack{
+                Button(action: {
+                    devicePickerManager.keyHome()
+                }){
+                    basicBtn(text: "keyHome")
+                }
 //                Button(action: {
 //                    webOSTVService.keyLeft()
 //                }){
@@ -97,7 +96,7 @@ struct ConnectSdkView: View {
 //                }){
 //                    basicBtn(text: "Key→")
 //                }
-//            }
+            }
             
         }
         .navigationTitle("ConnectSDK View")
