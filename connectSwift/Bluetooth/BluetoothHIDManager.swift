@@ -28,7 +28,7 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
 
     func setupPeripheral() { // 주변 장치로 동작하기 위한 설정
         let customServiceUUID = CBUUID(string: "1812")
-               let customService = CBMutableService(type: customServiceUUID, primary: true) // 맞춤형 서비스를 정의
+               let customService = CBMutableService(type: customServiceUUID, primary: true) // 맞춤형 서비스를 정의하고 주요서비스로 지정
 
                // HID 정보 특성
                let hidInfoUUID = CBUUID(string: "2A4A") // HID 정보 특성 UUID
@@ -47,7 +47,7 @@ class BluetoothHIDManager: NSObject, ObservableObject, CBPeripheralManagerDelega
 
     func startAdvertising() { // 광고 시작
         let advertisementData: [String: Any] = [
-            CBAdvertisementDataLocalNameKey: "MyHIDDevice",
+            CBAdvertisementDataLocalNameKey: "MyHIDDevice Test",
             CBAdvertisementDataServiceUUIDsKey: [CBUUID(string: "1812")]
         ]
         peripheralManager?.startAdvertising(advertisementData)
