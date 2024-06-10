@@ -25,13 +25,13 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
         initialize()
     }
     
+    //위치 권한
     private func setupLocationManager() {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
     }
-
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             print("Location access granted.")
@@ -75,10 +75,10 @@ class DiscoveryListener: NSObject, ObservableObject, DiscoveryManagerDelegate, C
     
     func disconnectFromDevice(_ device: ConnectableDevice) {
         DispatchQueue.main.async {
-            self.devices.removeAll { $0 == device }
+//            self.devices.removeAll { $0 == device }
             self.deviceCount = self.devices.count
-            print("디바이스 연결 해제: \(String(describing: device.friendlyName))")
-            print("현재 디바이스 수: \(self.deviceCount)")
+            self.discoveryManager?.deviceStore.removeAll()
+            print("disconnectFromDevice 디바이스 연결 해제: \(String(describing: device.friendlyName))")
         }
     }
 

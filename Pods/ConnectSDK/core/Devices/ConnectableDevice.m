@@ -314,7 +314,7 @@
     if (service.isConnectable && !service.connected)
     {
         if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDeviceConnectionRequired:forService:)])
-            dispatch_on_main(^{ [_delegate connectableDeviceConnectionRequired:self forService:service]; });
+            dispatch_on_main(^{ [self->_delegate connectableDeviceConnectionRequired:self forService:service]; });
     }
 
     [self updateCapabilitiesList:oldCapabilities];
@@ -459,6 +459,7 @@
         }
     }
 }
+
 
 - (void)deviceServicePairingSuccess:(DeviceService *)service
 {
